@@ -1,4 +1,4 @@
 
 <template>
-    <h1> This is the Collection page</h1>
+    <h1> Collection Page </h1>
 </template>

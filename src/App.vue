@@ -1,83 +1,103 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+const cl = (str) => console.log(str) 
+
 </script>
 
-<template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/collection">Collection</RouterLink>
-      </nav>
+<template >
+  <header >
+    <div class="container-profile-img">
+      <img class="profile-img" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"> 
+      <p> [Username] </p>
     </div>
   </header>
+  <div class="content-divider"></div>
+  <div class="content">
+    <RouterView />
+  </div>
+  <nav>
+    <RouterLink to="/">Home</RouterLink>
+    <RouterLink to="/collection">Collection</RouterLink>
+    <RouterLink to="/profile">Profile</RouterLink>
+  </nav>
 
-  <RouterView />
 </template>
 
 <style scoped>
+/* Color Pallete
+/*  #FD804A 
+    #BF2A45 
+    #8C0343 
+    #260F26 
+    #F2CFBB
+*/
+
+@import './assets/base.css';
+
+:global(body) {
+  background: linear-gradient(to bottom, #FD804A, #BF2A45, #8C0343  );
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: black;
+  margin: 0;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
 header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
   margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+.container-profile-img{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  right: 5%;
+  top: 5%;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
+.profile-img {
+  height: 4rem;
+  width: 4rem;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+.content-divider {
+  padding: 2rem;
+}
+
+.content {
+  margin: 10%;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  background-color: #260F26;
 }
 
 nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
+  border-inline: 1px solid black;
+  padding: 1rem;
+  width: 100%;
+  height: 100%;
+  font-weight: 800;
+  text-decoration: none;
+  color: white;
 }
 
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
 </style>
+

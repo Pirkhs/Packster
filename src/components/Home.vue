@@ -1,4 +1,6 @@
 
 <template>
-    <h1> This is the Home page </h1>
+    <section class="featured">
+        <p> Featured Cards Section</p>
+    </section>
 </template>
