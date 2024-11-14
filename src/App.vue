@@ -1,14 +1,13 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
-const cl = (str) => console.log(str) 
-
 </script>
 
 <template >
   <header >
+    <h1> Packster </h1>
     <div class="container-profile-img">
-      <img class="profile-img" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"> 
+      <img class="profile-img" alt="Your personal profile image" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"> 
       <p> [Username] </p>
     </div>
   </header>
@@ -25,20 +24,10 @@ const cl = (str) => console.log(str)
 </template>
 
 <style scoped>
-/* Color Pallete
-/*  #FD804A 
-    #BF2A45 
-    #8C0343 
-    #260F26 
-    #F2CFBB
-*/
 
 @import './assets/base.css';
 
 :global(body) {
-  background: linear-gradient(to bottom, #FD804A, #BF2A45, #8C0343  );
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   color: black;
   margin: 0;
 }
@@ -51,31 +40,36 @@ const cl = (str) => console.log(str)
 }
 
 header {
-  margin-top: 2rem;
+  width: 100%;
+  position: fixed;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  
 }
 
 .container-profile-img{
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: fixed;
-  right: 5%;
-  top: 5%;
 }
 
 .profile-img {
-  height: 4rem;
-  width: 4rem;
+  height: 3.5rem;
+  width: 3.5rem;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 3px solid black;
 }
 
 .content-divider {
-  padding: 2rem;
+  padding: 3rem;
 }
 
 .content {
-  margin: 10%;
+  margin: 8%;
 }
 
 nav {
