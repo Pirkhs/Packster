@@ -25,7 +25,6 @@ nav {
 }
 
 nav a {
-    border-inline: 1px solid black;
     padding: 1rem;
     width: 100%;
     height: 100%;

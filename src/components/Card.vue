@@ -54,10 +54,10 @@
 <style scoped>
 
 .card {
-    width: clamp(5rem, 8rem, 12.5rem);
+    width: clamp(5rem, 12.5rem, 15rem);
     padding: clamp(0.2rem, 2vw, 0.5rem);
     border-width: clamp(4px, 6px, 8px);
-    border: solid white;
+    border: solid lightgrey;
     border-radius: 12px;;
     background: v-bind(bgColor);
     color: black;
@@ -69,9 +69,12 @@
 }
 
 .card-img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
     width: clamp(90%, 95%, 100%);
     border-width: clamp(2px, 3px, 4px);
-    border: solid silver
+    border: solid white
 }
 
 .card-flavour-txt {

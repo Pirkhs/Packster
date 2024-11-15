@@ -31,7 +31,7 @@
 }
 
 .content-divider {
-  padding: 5rem;
+  padding: 4rem;
 }
 
 .content {
