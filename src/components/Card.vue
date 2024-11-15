@@ -24,7 +24,20 @@
         card: Object
     })
 
-    const { id, name, image, flavourText } = props.card
+    const { id, name, image, flavourText, type } = props.card
+
+    const typeToBg = {
+        "Earth": "rgba(227, 186, 143, 0.5)",
+        "Dark": "rgba(0, 0, 0, 0.5)",
+        "Normal": "rgba(189, 195, 199, 0.5)",
+        "Fire": "rgba(255, 76, 48, 0.5)",
+        "Light": "rgba(250, 250, 250, 0.5)",
+        "Water": "rgba(3, 138, 255, 0.5)",
+        "Grass": "rgba(147, 250, 165, 0.5)",
+        "Electric": "rgba(255, 255, 159, 0.5)",
+    }
+
+    const bgColor = ref(typeToBg[type])
 
 </script>
 
@@ -32,39 +45,44 @@
     <div
     class="card">
         <p class="card-name"> {{ name }} </p>
-        <img class="card-img" :src="image"/>
+        <img class="card-img" :src="image" :alt="name"/>
+        <p class="card-flavour-txt"> " {{ flavourText }} " </p>
+        <p class="card-id"> Collector's ID: {{ id }} </p>
     </div>
 </template>
 
 <style scoped>
+
 .card {
-    border: 5px solid black;
-    background: #F3F3F3;
-}
-
-
-/* Desktop card sizes */
-@media all and (min-width: 1200px) {
-    .card {
-        width: 10em;
-        height: 15em;
-    }
-}
-
-/* Mobile card sizes */
-@media all and (max-width: 767px) {
-    .card {
-        width: 5em;
-        height: 10em;
-    }
+    width: clamp(5rem, 8rem, 12.5rem);
+    padding: clamp(0.2rem, 2vw, 0.5rem);
+    border-width: clamp(4px, 6px, 8px);
+    border: solid white;
+    border-radius: 12px;;
+    background: v-bind(bgColor);
+    color: black;
 }
 
 .card-name {
-    font-weight: bold;
+    font-size: clamp(0.7rem, 3vw, 1rem);
+    font-weight: 900;
 }
 
 .card-img {
-    width: 100%;
+    width: clamp(90%, 95%, 100%);
+    border-width: clamp(2px, 3px, 4px);
+    border: solid silver
+}
+
+.card-flavour-txt {
+    display: -webkit-box;
+    font-size: clamp(0.5rem, 2vw, 0.7rem);
+    font-style: italic; 
+}
+
+.card-id {
+    font-size: clamp(0.5rem, 2vw, 0.7rem);
+    text-align: right; 
 }
 
 </style>
