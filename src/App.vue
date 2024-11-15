@@ -6,10 +6,11 @@
 
 <template >
   <Header></Header>
-  <div class="content-divider"></div>
+  <div class="whitespace"></div>
   <div class="content">
     <RouterView />
   </div>
+  <div class="whitespace"></div>
   <Nav></Nav>
 
 </template>
@@ -30,8 +31,8 @@
   font-weight: normal;
 }
 
-.content-divider {
-  padding: 4rem;
+.whitespace {
+  padding: 3rem;
 }
 
 .content {
