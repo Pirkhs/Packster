@@ -7,8 +7,8 @@
 <template >
   <Header></Header>
   <div class="whitespace"></div>
-  <div class="content">
-    <RouterView />
+  <div class="content" >
+    <RouterView/>
   </div>
   <div class="whitespace"></div>
   <Nav></Nav>
