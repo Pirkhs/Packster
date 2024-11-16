@@ -23,7 +23,7 @@ const featuredCards = [
         image: "https://images.piclumen.com/normal/20241115/1857107894601269249/844914bf-fac2-4de7-bdfa-693b3fe12a9d.webp",
         flavourText: "Where I tread, the land shudders, the sky burns, and only the strongest survive.",
         type: "Fire"
-    }
+    },
     /*
     {
         id: 4,
@@ -35,22 +35,35 @@ const featuredCards = [
     */
 ]
 
-const packQuantity = ref(0)
-const isModalOpen = ref(false)
+const isPackOpen = ref(false)
+const packQuantity = ref(5)
+const isModalOpen = ref(true)
 const isDropdownOpen = ref(false)
+
 </script>
 
 <template>
 
     <transition name="fade">
-        <div v-if="isModalOpen" class="overlay"></div>
+        <div v-if="isModalOpen && packQuantity > 0" class="overlay"></div>
     </transition>
 
     <transition name="pop">
-        <div v-if="isModalOpen" class="modal">
-            <button @click="isModalOpen = false"> Temporary Close Button </button>
-            <p> Here is where the packs are opened </p>
-            <p> Packs remaining: {{ packQuantity }} </p>
+        <div v-if="isModalOpen && packQuantity > 0" class="modal">
+            <Card v-if="isPackOpen" :card="featuredCards[0]"></Card>
+            <transition name="slide-down">
+                <div v-if="!isPackOpen" class="container-pack">
+                    <div class="pack-ripline"></div>
+                    <div class="pack"> 
+                        <p> Packster </p>
+                    </div>
+                </div>
+            </transition>
+            <br/>
+            <transition name="inflate"> 
+                <button v-if="!isPackOpen" class="btn-open-pack" @click="isPackOpen = true">  Open Pack </button>
+            </transition>
+            <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
         </div>
     </transition>
 
@@ -62,8 +75,8 @@ const isDropdownOpen = ref(false)
             <Card v-for="card in featuredCards" :card="card"/>
         </div>
         
-        <button class="open-btn" @click="isDropdownOpen = !isDropdownOpen">Open Packs </button>
-        <transition name="slide">
+        <button class="open-btn" @click="isDropdownOpen = !isDropdownOpen"> Open Packs </button>
+        <transition name="drop">
             <section v-if="isDropdownOpen" class="container-dropdown">
                 <p> How many packs to open? </p>
                 <div class="pack-sizes">
@@ -142,7 +155,7 @@ h1 {
     transition: transform .4s ease-in-out;
 }
 
-.slide-enter-from, .slide-leave-to{
+.drop-enter-from, .drop-leave-to{
   transform: scaleY(0);
 }
 
@@ -175,6 +188,8 @@ h1 {
     background-color: white;;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     z-index: 999;
     border: 1px solid black;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
@@ -182,13 +197,51 @@ h1 {
 
 .pop-enter-active,
 .pop-leave-active {
-  transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+    transition: transform 0.4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
 }
 
 .pop-enter-from,
 .pop-leave-to {
-  opacity: 0;
-  transform: scale(0.3) translateY(-50%);
+    opacity: 0;
+    transform: scale(0.3) translateY(-50%);
+}
+
+.pack {
+    width: clamp(5.5rem, 13rem, 15.5rem);
+    height: clamp(15rem, 17.5rem, 25rem);
+    border-width: clamp(4px, 6px, 8px);
+    border: 1px solid black;
+    background-color: lightblue;
+}
+
+.pack-ripline {
+    padding: 1rem;
+    border-bottom: 2px dashed black;
+    transform-origin: right;
+    background-color: lightblue
+}
+
+.slide-down-enter-active , .slide-down-leave-active  {
+    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+}
+
+.slide-down-enter-from, .slide-down-leave-to  {
+    opacity: 0;
+    transform: translateY(10rem)
+}
+
+.slide-down-enter-active .pack-ripline , .slide-down-leave-active .pack-ripline  {
+    transition: transform 0.7s ease-in;
+}
+
+.slide-down-enter-from .pack-ripline, .slide-down-leave-to .pack-ripline  {
+    transform: scaleX(0)
+}
+
+
+.btn-open-pack {
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 </style>
