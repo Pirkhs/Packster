@@ -1,6 +1,6 @@
 <script setup>
 import Card from './Card.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const featuredCards = [
     {
@@ -24,15 +24,6 @@ const featuredCards = [
         flavourText: "Where I tread, the land shudders, the sky burns, and only the strongest survive.",
         type: "Fire"
     },
-    /*
-    {
-        id: 4,
-        name: "Sir Caelum, Oathbreaker",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/5c98e328-8172-4bfa-bf6c-0ddd4b5584c8.webp",
-        flavourText: "An oath once sworn can be a bond or a curse. I swore to both… and to none.",
-        type: "Normal"
-    }
-    */
 ]
 
 const packedCards = [    
@@ -40,11 +31,19 @@ const packedCards = [
         id: 4,
         name: "Sir Caelum, Oathbreaker",
         image: "https://images.piclumen.com/normal/20241115/1857107894601269249/5c98e328-8172-4bfa-bf6c-0ddd4b5584c8.webp",
-        flavourText: "An oath once sworn can be a bond or a curse. I swore to both… and to none.",
+        flavourText: "An oath once sworn can be a bond or a curse. I swore to both… and to none. ",
         type: "Normal"
-    }
+    },
+    {
+        id: 2,
+        name: "Sylph of the Midnight Veil",
+        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/d0923162-75b1-49c3-a168-e6f413878cc8.webp",
+        flavourText: "You cannot defeat what you cannot see. But you will feel my presence in your soul long after I'm gone.",
+        type: "Dark"
+    },
 ]
 
+const currCardIndex = ref(0)
 const isPackOpen = ref(false)
 const packQuantity = ref(5)
 const isModalOpen = ref(true)
@@ -52,6 +51,10 @@ const isDropdownOpen = ref(false)
 
 const handleOpenPack = () => {
     isPackOpen.value = true
+}
+
+const handleNextCard = () => {
+    currCardIndex.value = currCardIndex.value + 1;
 }
 
 </script>
@@ -64,11 +67,11 @@ const handleOpenPack = () => {
 
     <transition name="pop">
         <div v-if="isModalOpen && packQuantity > 0" class="modal">
-
             <Card 
-            v-if="isPackOpen" 
+            @click="handleNextCard"
             class="packed-card"
-            :card="packedCards[0]"></Card>
+            :key = "currCardIndex"
+            :card="packedCards[currCardIndex]"></Card>
 
             <div class="container-modal-flex">
 
@@ -76,22 +79,19 @@ const handleOpenPack = () => {
                     <div v-if="!isPackOpen">
                         <div class="pack-ripline"></div>
                         <div class="pack"> 
-                            <p> Packster </p>
-                            <p> Contains 5 booster cards </p>
+                            <p id="name"> Packster </p>
+                            <transition>
+                                <button v-if="!isPackOpen" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
+                            </transition>
+                            <p id="info"> Contains 5 booster cards </p>
                         </div>
                     </div>
                 </transition>
 
                 <br/>
-
-                <transition>
-                    <button v-if="!isPackOpen" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
-                </transition>
-              
-
+                
                 <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
-                <p> Click to show next card </p>
-
+            
             </div>
         </div>
     </transition>
@@ -224,6 +224,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 
 .pop-enter-active,
@@ -239,7 +240,7 @@ h1 {
 
 .pack {
     width: clamp(5.5rem, 13rem, 15.5rem);
-    height: clamp(15rem, 17.5rem, 25rem);
+    height: clamp(15rem, 18rem, 25rem);
     border-width: clamp(4px, 6px, 8px);
     border: 1px solid black;
     background-color: lightblue;
@@ -247,6 +248,17 @@ h1 {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+}
+
+.pack #name {
+    font-weight: bold;
+    font-size: x-large;
+
+}
+
+.pack #info {
+    font-style: italic;
+    font-size: small;
 }
 
 .pack-ripline {
@@ -257,7 +269,7 @@ h1 {
 }
 
 .slide-down-enter-active , .slide-down-leave-active  {
-    transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+    transition: opacity 2.5s ease-in-out, transform 1.5s ease-in-out;
 }
 
 .slide-down-enter-from, .slide-down-leave-to  {
@@ -286,11 +298,12 @@ h1 {
 }
 
 .packed-card {
+    height: clamp(15rem, 18.5rem, 25rem);
     position: absolute;
-    margin-left: auto;
-    margin-right: auto;
     left: 0;
     right: 0;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
     z-index: -5
 }

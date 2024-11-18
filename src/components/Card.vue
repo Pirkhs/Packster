@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, computed } from 'vue'
+    import { ref, watch, computed } from 'vue'
     import { useMouseInElement } from '@vueuse/core'
     const targetCard = ref(null)
     
