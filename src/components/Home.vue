@@ -50,10 +50,6 @@ const packQuantity = ref(5)
 const isModalOpen = ref(true)
 const isDropdownOpen = ref(false)
 
-const onAfterEnter = () => {
-    console.log("test")
-}
-
 const handleOpenPack = () => {
     isPackOpen.value = true
 }
@@ -94,6 +90,7 @@ const handleOpenPack = () => {
               
 
                 <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
+                <p> Click to show next card </p>
 
             </div>
         </div>
