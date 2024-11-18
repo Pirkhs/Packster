@@ -54,7 +54,7 @@
 <style scoped>
 
 .card {
-    width: clamp(5rem, 12.5rem, 15rem);
+    width: clamp(5rem, 10.5rem, 13rem);
     padding: clamp(0.2rem, 2vw, 0.5rem);
     border-width: clamp(4px, 6px, 8px);
     border: solid lightgrey;

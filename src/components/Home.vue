@@ -35,10 +35,28 @@ const featuredCards = [
     */
 ]
 
+const packedCards = [    
+    {
+        id: 4,
+        name: "Sir Caelum, Oathbreaker",
+        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/5c98e328-8172-4bfa-bf6c-0ddd4b5584c8.webp",
+        flavourText: "An oath once sworn can be a bond or a curse. I swore to both… and to none.",
+        type: "Normal"
+    }
+]
+
 const isPackOpen = ref(false)
 const packQuantity = ref(5)
 const isModalOpen = ref(true)
 const isDropdownOpen = ref(false)
+
+const onAfterEnter = () => {
+    console.log("test")
+}
+
+const handleOpenPack = () => {
+    isPackOpen.value = true
+}
 
 </script>
 
@@ -50,20 +68,34 @@ const isDropdownOpen = ref(false)
 
     <transition name="pop">
         <div v-if="isModalOpen && packQuantity > 0" class="modal">
-            <Card v-if="isPackOpen" :card="featuredCards[0]"></Card>
-            <transition name="slide-down">
-                <div v-if="!isPackOpen" class="container-pack">
-                    <div class="pack-ripline"></div>
-                    <div class="pack"> 
-                        <p> Packster </p>
+
+            <Card 
+            v-if="isPackOpen" 
+            class="packed-card"
+            :card="packedCards[0]"></Card>
+
+            <div class="container-modal-flex">
+
+                <transition name="slide-down">
+                    <div v-if="!isPackOpen">
+                        <div class="pack-ripline"></div>
+                        <div class="pack"> 
+                            <p> Packster </p>
+                            <p> Contains 5 booster cards </p>
+                        </div>
                     </div>
-                </div>
-            </transition>
-            <br/>
-            <transition name="inflate"> 
-                <button v-if="!isPackOpen" class="btn-open-pack" @click="isPackOpen = true">  Open Pack </button>
-            </transition>
-            <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
+                </transition>
+
+                <br/>
+
+                <transition>
+                    <button v-if="!isPackOpen" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
+                </transition>
+              
+
+                <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
+
+            </div>
         </div>
     </transition>
 
@@ -186,13 +218,15 @@ h1 {
     width: 70%;
     height: 70%;
     background-color: white;;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     z-index: 999;
     border: 1px solid black;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.container-modal-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .pop-enter-active,
@@ -212,6 +246,10 @@ h1 {
     border-width: clamp(4px, 6px, 8px);
     border: 1px solid black;
     background-color: lightblue;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .pack-ripline {
@@ -227,7 +265,7 @@ h1 {
 
 .slide-down-enter-from, .slide-down-leave-to  {
     opacity: 0;
-    transform: translateY(10rem)
+    transform: translateY(15rem)
 }
 
 .slide-down-enter-active .pack-ripline , .slide-down-leave-active .pack-ripline  {
@@ -242,6 +280,22 @@ h1 {
 .btn-open-pack {
     border-radius: 5px;
     cursor: pointer;
+    transition: all 0.2s ;
+    padding: 0.5rem;
+}
+
+.btn-open-pack:active {
+    transform: scale(0.7);
+}
+
+.packed-card {
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    z-index: -5
 }
 
 </style>
