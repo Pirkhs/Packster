@@ -41,20 +41,51 @@ const packedCards = [
         flavourText: "You cannot defeat what you cannot see. But you will feel my presence in your soul long after I'm gone.",
         type: "Dark"
     },
+    {
+        id: 3,
+        name: "Blazequake, Infernal Giant",
+        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/844914bf-fac2-4de7-bdfa-693b3fe12a9d.webp",
+        flavourText: "Where I tread, the land shudders, the sky burns, and only the strongest survive.",
+        type: "Fire"
+    },
+    
 ]
 
 const currCardIndex = ref(0)
+const canOpenPack = ref(true)
 const isPackOpen = ref(false)
-const packQuantity = ref(5)
-const isModalOpen = ref(true)
+const packQuantity = ref(0)
+const isModalOpen = ref(false)
 const isDropdownOpen = ref(false)
 
+const handleOpenModal = (quantity) => {
+    packQuantity.value = quantity
+    isModalOpen.value = true
+    canOpenPack.value = true
+    currCardIndex.value = 0
+}
+
 const handleOpenPack = () => {
+    canOpenPack.value = false
     isPackOpen.value = true
 }
 
 const handleNextCard = () => {
     currCardIndex.value = currCardIndex.value + 1;
+    if (currCardIndex.value === packedCards.length) {
+        packQuantity.value = packQuantity.value - 1
+        handleNextPack()
+        return;
+    }
+}
+
+const handleNextPack = () => {
+    isPackOpen.value = false
+}
+
+const afterPackReturned = () => {
+    canOpenPack.value = true
+    currCardIndex.value = 0
 }
 
 </script>
@@ -67,21 +98,33 @@ const handleNextCard = () => {
 
     <transition name="pop">
         <div v-if="isModalOpen && packQuantity > 0" class="modal">
-            <Card 
-            @click="handleNextCard"
-            class="packed-card"
-            :key = "currCardIndex"
-            :card="packedCards[currCardIndex]"></Card>
+            <div v-for="card, index in packedCards">
+                <!-- No card animation for first card in the pack-->
+                    <Card 
+                    v-if="currCardIndex === index && currCardIndex === 0"
+                    @click="handleNextCard"
+                    class="packed-card"
+                    :key = "currCardIndex"
+                    :card="card"></Card>
+                <transition name="bounce-in">
+                    <Card 
+                    v-if="currCardIndex === index && currCardIndex !== 0"
+                    @click="handleNextCard"
+                    class="packed-card"
+                    :key = "currCardIndex"
+                    :card="card"></Card>
+                </transition>
+            </div>
 
             <div class="container-modal-flex">
 
-                <transition name="slide-down">
-                    <div v-if="!isPackOpen">
+                <transition @after-enter="afterPackReturned" name="slide-down">
+                    <div v-if="!isPackOpen" class="container-pack">
                         <div class="pack-ripline"></div>
                         <div class="pack"> 
                             <p id="name"> Packster </p>
-                            <transition>
-                                <button v-if="!isPackOpen" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
+                            <transition name="fade">
+                                <button v-if="canOpenPack" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
                             </transition>
                             <p id="info"> Contains 5 booster cards </p>
                         </div>
@@ -89,8 +132,9 @@ const handleNextCard = () => {
                 </transition>
 
                 <br/>
-                
-                <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
+                <transition name="fade">
+                    <p v-if="!isPackOpen"> Packs remaining: {{ packQuantity }} </p>
+                </transition>
             
             </div>
         </div>
@@ -109,9 +153,7 @@ const handleNextCard = () => {
             <section v-if="isDropdownOpen" class="container-dropdown">
                 <p> How many packs to open? </p>
                 <div class="pack-sizes">
-                    <button @click="isModalOpen=true; packQuantity = 1"> 1 </button>
-                    <button @click="isModalOpen=true; packQuantity = 3"> 3 </button>
-                    <button @click="isModalOpen=true; packQuantity = 5"> 5 </button>
+                    <button v-for="quantity in [1,3,5]" @click="handleOpenModal(quantity)"> {{ quantity }} </button>
                 </div>
             </section>
         </transition>
@@ -133,7 +175,7 @@ const handleNextCard = () => {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s linear;
+  transition: opacity 0.5s linear;
 }
 
 .fade-enter-from,
@@ -238,6 +280,10 @@ h1 {
     transform: scale(0.3) translateY(-50%);
 }
 
+.container-pack {
+    z-index: 10;
+}
+
 .pack {
     width: clamp(5.5rem, 13rem, 15.5rem);
     height: clamp(15rem, 18rem, 25rem);
@@ -268,13 +314,17 @@ h1 {
     background-color: lightblue
 }
 
-.slide-down-enter-active , .slide-down-leave-active  {
+.slide-down-enter-active {
+    transition: opacity 2.5s ease-in-out;
+}
+
+.slide-down-leave-active  {
     transition: opacity 2.5s ease-in-out, transform 1.5s ease-in-out;
 }
 
 .slide-down-enter-from, .slide-down-leave-to  {
     opacity: 0;
-    transform: translateY(15rem)
+    transform: translateY(20rem)
 }
 
 .slide-down-enter-active .pack-ripline , .slide-down-leave-active .pack-ripline  {
@@ -305,8 +355,26 @@ h1 {
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    z-index: -5
 }
 
+.bounce-in-enter-active {
+    animation: slide-right 0.5s
+}
+
+.bounce-in-leave-active {
+    animation: slide-right 0.5s reverse;
+}
+
+@keyframes slide-right {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.25);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
 </style>
 

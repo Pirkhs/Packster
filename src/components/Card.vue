@@ -27,14 +27,14 @@
     const { id, name, image, flavourText, type } = props.card
 
     const typeToBg = {
-        "Earth": "rgba(227, 186, 143, 0.5)",
-        "Dark": "rgba(0, 0, 0, 0.5)",
-        "Normal": "rgba(189, 195, 199, 0.5)",
-        "Fire": "rgba(255, 76, 48, 0.5)",
-        "Light": "rgba(250, 250, 250, 0.5)",
-        "Water": "rgba(3, 138, 255, 0.5)",
-        "Grass": "rgba(147, 250, 165, 0.5)",
-        "Electric": "rgba(255, 255, 159, 0.5)",
+        "Earth": "rgba(227, 186, 143)",
+        "Dark": "rgba(105, 105, 105)",
+        "Normal": "rgba(189, 195, 199)",
+        "Fire": "rgba(255, 76, 48)",
+        "Light": "rgba(250, 250, 250)",
+        "Water": "rgba(3, 138, 255)",
+        "Grass": "rgba(147, 250, 165)",
+        "Electric": "rgba(255, 255, 159)",
     }
 
     const bgColor = ref(typeToBg[type])
@@ -45,7 +45,7 @@
     <div
     class="card">
         <p class="card-name"> {{ name }} </p>
-        <img class="card-img" :src="image" :alt="name"/>
+        <img class="card-img" :src="image" :alt="name" rel="preload"/>
         <p class="card-flavour-txt"> " {{ flavourText }} " </p>
         <p class="card-id"> Collector's ID: {{ id }} </p>
     </div>
