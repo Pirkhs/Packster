@@ -8,7 +8,11 @@
   <Header></Header>
   <div class="whitespace"></div>
   <div class="content" >
-    <RouterView/>
+    <RouterView v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component" />
+      </transition>
+    </RouterView>
   </div>
   <div class="whitespace"></div>
   <Nav></Nav>
@@ -31,8 +35,16 @@
   font-weight: normal;
 }
 
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease-out;
+}
+
 .whitespace {
-  padding: 3rem;
+  padding: 4.5rem;
 }
 
 .content {

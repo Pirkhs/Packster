@@ -201,6 +201,10 @@ h1 {
     align-items: stretch;
 }
 
+.container-cards div{
+    flex-basis: 20%
+}
+
 .open-btn {
     margin-top: 1rem;
     text-align: center;
@@ -348,6 +352,7 @@ h1 {
 }
 
 .packed-card {
+    width: clamp(5rem, 10.5rem, 13rem);
     height: clamp(15rem, 18.5rem, 25rem);
     position: absolute;
     left: 0;

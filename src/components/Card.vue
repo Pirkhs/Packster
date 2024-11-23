@@ -42,8 +42,7 @@
 </script>
 
 <template>
-    <div
-    class="card">
+    <div class="card">
         <p class="card-name"> {{ name }} </p>
         <img class="card-img" :src="image" :alt="name" rel="preload"/>
         <p class="card-flavour-txt"> " {{ flavourText }} " </p>
@@ -54,7 +53,6 @@
 <style scoped>
 
 .card {
-    width: clamp(5rem, 10.5rem, 13rem);
     padding: clamp(0.2rem, 2vw, 0.5rem);
     border-width: clamp(4px, 6px, 8px);
     border: solid lightgrey;
