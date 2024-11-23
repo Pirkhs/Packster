@@ -20,6 +20,7 @@ header {
     padding: 1rem;
     background-color: lightgrey;
     box-shadow: 0px 2px 50px black;
+    z-index: 100;
 }
 
 .container-profile-img{

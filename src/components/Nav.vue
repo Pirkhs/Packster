@@ -22,6 +22,7 @@ nav {
     text-align: center;
     background-color: black;
     box-shadow: 0px -2px 50px white;
+    z-index: 100;
 }
 
 nav a {
