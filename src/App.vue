@@ -9,7 +9,7 @@
   <div class="whitespace"></div>
   <div class="content" >
     <RouterView v-slot="{ Component }">
-      <transition name="fade" mode="out-in">
+      <transition name="fade-and-slide" mode="out-in">
         <component :is="Component" />
       </transition>
     </RouterView>
@@ -35,12 +35,13 @@
   font-weight: normal;
 }
 
-.fade-enter-from, .fade-leave-to {
+.fade-and-slide-enter-from, .fade-and-slide-leave-to {
   opacity: 0;
+  transform: translateY(60px);
 }
 
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 0.5s ease-out;
+.fade-and-slide-enter-active, .fade-and-slide-leave-active {
+  transition: opacity 0.5s ease-in-out, transform 600ms ease-in-out;
 }
 
 .whitespace {
