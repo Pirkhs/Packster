@@ -1,8 +1,12 @@
+<script setup>
+import ProfileImage from './ProfileImage.vue'
+</script>
+
 <template>
     <header >
     <h1> Packster </h1>
     <div class="container-profile-img">
-      <img class="profile-img" alt="Your personal profile image" src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"> 
+      <ProfileImage/>
       <p> [Username] </p>
     </div>
   </header>
@@ -29,10 +33,4 @@ header {
   align-items: center;
 }
 
-.profile-img {
-  height: 3.5rem;
-  width: 3.5rem;
-  border-radius: 50%;
-  border: 3px solid black;
-}
 </style>
