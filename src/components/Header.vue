@@ -21,7 +21,7 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: lightgrey;
     box-shadow: 0px 2px 50px black;
     z-index: 100;

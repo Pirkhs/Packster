@@ -163,7 +163,7 @@ const afterPackReturned = () => {
 <style scoped>
 
 .overlay {
-    z-index: 5;
+    z-index: 101;
     position: fixed;
     top: 0;
     left: 0;

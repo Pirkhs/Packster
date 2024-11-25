@@ -27,14 +27,14 @@
     const { id, name, image, flavourText, type } = props.card
 
     const typeToBg = {
-        "Earth": "rgba(227, 186, 143)",
-        "Dark": "rgba(105, 105, 105)",
         "Normal": "rgba(189, 195, 199)",
         "Fire": "rgba(255, 76, 48)",
-        "Light": "rgba(250, 250, 250)",
         "Water": "rgba(3, 138, 255)",
         "Grass": "rgba(147, 250, 165)",
+        "Earth": "rgba(227, 186, 143)",
         "Electric": "rgba(255, 255, 159)",
+        "Dark": "rgba(105, 105, 105)",
+        "Light": "rgba(250, 250, 250)",
     }
 
     const bgColor = ref(typeToBg[type])
