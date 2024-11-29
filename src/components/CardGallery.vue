@@ -1,13 +1,12 @@
 <script setup>
+import { watch, ref } from 'vue'
 import Card from './Card.vue'
-const props = defineProps({
-    cardCollection: Array
-})
+const {cardGallery} = defineProps(["cardGallery"])
 </script>
 
 <template>
     <div class="container-collection"> 
-        <div class="container-collected-card" v-for="card in cardCollection">
+        <div class="container-collected-card" v-for="card in cardGallery">
             <Card
             class="collected-card"
             :card="card"></Card>

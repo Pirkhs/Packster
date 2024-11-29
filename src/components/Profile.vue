@@ -44,7 +44,7 @@ const favouriteCards = [
         <Table :headers="headers" :data="testData"></Table>
 
         <h2> Favourite Cards </h2>
-        <CardGallery :cardCollection="favouriteCards"></CardGallery>
+        <CardGallery :cardGallery="favouriteCards"></CardGallery>
     </main>
 </template>
 

@@ -5,9 +5,9 @@
 
 <template>
     <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/collection">Collection</RouterLink>
-        <RouterLink to="/profile">Profile</RouterLink>
+        <RouterLink active-class="active" to="/">Home</RouterLink>
+        <RouterLink active-class="active" to="/collection">Collection</RouterLink>
+        <RouterLink active-class="active" to="/profile">Profile</RouterLink>
     </nav>
 </template>
 
@@ -31,7 +31,10 @@ nav a {
     height: 100%;
     font-weight: 800;
     text-decoration: none;
-    color: white;
+    color: grey;
 }
 
+.active {
+    color: white
+}
 </style>
