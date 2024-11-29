@@ -1,12 +1,15 @@
 <script setup>
 import ProfileImage from './ProfileImage.vue'
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
     <header >
     <h1> Packster </h1>
     <div class="container-profile-img">
-      <ProfileImage/>
+      <RouterLink to="/profile">
+        <ProfileImage/>
+      </RouterLink>
       <p> [Username] </p>
     </div>
   </header>
