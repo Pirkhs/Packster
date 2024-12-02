@@ -1,5 +1,6 @@
 <script setup>
 import Card from './Card.vue'
+import Overlay from './Overlay.vue'
 import { ref, watch } from 'vue'
 
 const featuredCards = [
@@ -93,7 +94,7 @@ const afterPackReturned = () => {
 <template>
 
     <transition name="fade">
-        <div v-if="isModalOpen && packQuantity > 0" class="overlay"></div>
+        <Overlay v-if="isModalOpen && packQuantity > 0"></Overlay>
     </transition>
 
     <transition name="pop">
@@ -161,17 +162,6 @@ const afterPackReturned = () => {
 </template>
 
 <style scoped>
-
-.overlay {
-    z-index: 101;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #0a0e13;
-    opacity: 0.6;
-}
 
 .fade-enter-active,
 .fade-leave-active {
