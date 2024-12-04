@@ -1,16 +1,20 @@
 <script setup>
 import ProfileImage from './ProfileImage.vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
+
+const route = useRoute()
 </script>
 
 <template>
     <header >
     <h1> Packster </h1>
-    <div class="container-profile-img">
+    <div v-if="!route.meta.hideNavbar" class="container-profile-img">
       <RouterLink to="/profile">
         <ProfileImage/>
       </RouterLink>
-      <p> [Username] </p>
+      <RouterLink to="/login">
+        <button> Sign Out </button>
+      </RouterLink>
     </div>
   </header>
 </template>
@@ -18,16 +22,17 @@ import { RouterLink } from 'vue-router'
 <style scoped>
 
 header {
-    width: 100%;
-    position: fixed;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem;
-    background-color: lightgrey;
-    box-shadow: 0px 2px 50px black;
-    z-index: 100;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  padding-inline: 2rem;
+  background-color: lightgrey;
+  box-shadow: 0px 2px 50px black;
+  z-index: 100;
 }
 
 .container-profile-img{

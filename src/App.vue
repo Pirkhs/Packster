@@ -1,7 +1,8 @@
 <script setup>
   import Header from './components/Header.vue'
   import Nav from './components/Nav.vue'
-  import { RouterLink, RouterView } from 'vue-router'
+  import { RouterLink, RouterView, useRoute } from 'vue-router'
+  const route = useRoute()
 </script>
 
 <template >
@@ -15,7 +16,7 @@
     </RouterView>
   </div>
   <div class="whitespace"></div>
-  <Nav></Nav>
+  <Nav v-if="!route.meta.hideNavbar"></Nav>
 
 </template>
 
@@ -26,6 +27,7 @@
 :global(body) {
   color: black;
   margin: 0;
+  background-color: #f4f5fa
 }
 
 #app {
@@ -33,6 +35,7 @@
   margin: 0 auto;
   padding: 2rem;
   font-weight: normal;
+
 }
 
 .fade-and-slide-enter-from, .fade-and-slide-leave-to {
