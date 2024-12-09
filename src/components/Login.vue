@@ -1,15 +1,31 @@
+<script setup>
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
+const router = useRouter()
+
+const usernameInput = ref("")
+const passwordInput = ref("")
+
+const handleLogIn = () => {
+   // Check details with database
+
+   router.push({path: `/`})
+
+}
+</script>
+
 <template>
     <div class="container-login"> 
         <h2> Log In </h2>
-        <form class="form-flex">
+        <form @submit.prevent="handleLogIn" class="form-flex">
             <label for="username"> Username </label>
-            <input id="username" type="text">
+            <input id="username" v-model="usernameInput" type="text">
 
             <br/>
 
             <label for="password"> Password </label>
-            <input id="password" type="text">
-
+            <input id="password" v-model="passwordInput" type="text">
             <br/>
 
             <input value="Log In" type="submit"> 
