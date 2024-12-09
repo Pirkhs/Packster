@@ -1,19 +1,39 @@
+<script setup>
+
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
+const router = useRouter()
+
+const emailInput = ref("")
+const usernameInput = ref("")
+const passwordInput = ref("")
+
+const handleSignUp = () => {
+   // Check inputs and create new account
+
+   router.push({path: `/login`})
+
+}
+
+</script>
+
 <template>
     <div class="container-signup"> 
         <h2> Sign Up </h2>
-        <form class="form-flex">
+        <form @submit.prevent="handleSignUp" class="form-flex">
             <label for="email"> Email </label>
-            <input id="email" type="text">
+            <input id="email" type="text" v-model="emailInput">
 
             <br/>
 
             <label for="username"> Username </label>
-            <input id="username" type="text">
+            <input id="username" type="text" v-model="usernameInput">
 
             <br/>
 
             <label for="password"> Password </label>
-            <input id="password" type="text">
+            <input id="password" type="text" v-model="passwordInput">
 
             <br/>
 
