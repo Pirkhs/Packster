@@ -5,7 +5,7 @@
   const route = useRoute()
 </script>
 
-<template >
+<template>
   <Header></Header>
   <div class="whitespace"></div>
   <div class="content" >
@@ -16,7 +16,7 @@
     </RouterView>
   </div>
   <div class="whitespace"></div>
-  <Nav v-if="!route.meta.hideNavbar"></Nav>
+  <Nav v-if='route.path !== `/login` && route.path !== `/signup`'></Nav>
 
 </template>
 

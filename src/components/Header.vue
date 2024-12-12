@@ -8,7 +8,7 @@ const route = useRoute()
 <template>
     <header >
     <h1> Packster </h1>
-    <div v-if="!route.meta.hideNavbar" class="container-profile-img">
+    <div v-if='route.path !== `/login` && route.path !== `/signup`' class="container-profile-img">
       <RouterLink to="/profile">
         <ProfileImage/>
       </RouterLink>
