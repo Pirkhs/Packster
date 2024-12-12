@@ -32,6 +32,10 @@ const router = createRouter({
       path: '/profile',
       component: () => import ('../views/ProfileView.vue')  
     },
+    {
+      path: '/:catchall(.*)*',
+      component: () => import ('../views/404View.vue')
+    }
   ],
 })
 
