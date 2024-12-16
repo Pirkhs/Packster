@@ -8,9 +8,14 @@ const usernameInput = ref("")
 const passwordInput = ref("")
 
 const handleLogIn = () => {
-   // Check details with database
+    // Check details with database
 
-   router.push({path: `/`})
+    localStorage.clear()
+
+    // Fetch user id
+    localStorage.setItem("userId", 1)
+
+    router.push({path: `/`})
 
 }
 </script>

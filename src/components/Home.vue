@@ -2,6 +2,15 @@
 import Card from './Card.vue'
 import Overlay from './Overlay.vue'
 import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+
+const userId = localStorage.getItem("userId")
+
+if (!userId) {
+    router.push({path: '/login'})
+}
 
 const featuredCards = [
     {
