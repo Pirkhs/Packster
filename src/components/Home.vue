@@ -115,14 +115,16 @@ const afterPackReturned = () => {
                     @click="handleNextCard"
                     class="packed-card"
                     :key = "currCardIndex"
-                    :card="card"></Card>
+                    :card="card"
+                    :disableSingleView="true"></Card>
                 <transition name="bounce-in">
                     <Card 
                     v-if="currCardIndex === index && currCardIndex !== 0"
                     @click="handleNextCard"
                     class="packed-card"
                     :key = "currCardIndex"
-                    :card="card"></Card>
+                    :card="card"
+                    :disableSingleView="true"></Card>
                 </transition>
             </div>
 

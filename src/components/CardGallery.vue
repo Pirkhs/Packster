@@ -2,9 +2,11 @@
 import { watch, ref } from 'vue'
 import Card from './Card.vue'
 const {cardGallery} = defineProps(["cardGallery"])
+
 </script>
 
 <template>
+    <p> Click/Tap on a Card to View More </p>
     <div class="container-collection"> 
         <div class="container-collected-card" v-for="card in cardGallery">
             <Card

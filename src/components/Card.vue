@@ -1,48 +1,68 @@
 <script setup>
-    import { ref, watch, computed} from 'vue'
-    import { useMouseInElement } from '@vueuse/core'
-    const targetCard = ref(null)
+import { ref, watch, computed} from 'vue'
+import { useRouter } from 'vue-router'
+import { useMouseInElement } from '@vueuse/core'
+const targetCard = ref(null)
+
+const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(targetCard)
+
+const cardTransform = computed(() => {
+    const MAX_ROTATION = 6
     
-    const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(targetCard)
+    const rX = (
+        MAX_ROTATION / 2 -
+        (elementY.value / elementHeight.value) * MAX_ROTATION
+    ).toFixed(2)
+    
+    const rY = (
+        (elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2
+    ).toFixed(2)
 
-    const cardTransform = computed(() => {
-        const MAX_ROTATION = 6
-        
-        const rX = (
-            MAX_ROTATION / 2 -
-            (elementY.value / elementHeight.value) * MAX_ROTATION
-        ).toFixed(2)
-        
-        const rY = (
-            (elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2
-        ).toFixed(2)
+    return isOutside.value ? '' : `perspective(${elementWidth.value}px) rotateX(${rx}deg) rotateY(${rY}deg)` 
+})
 
-        return isOutside.value ? '' : `perspective(${elementWidth.value}px) rotateX(${rx}deg) rotateY(${rY}deg)` 
-    })
-
-    const props = defineProps({
-        card: Object
-    })
-
-    const { id, name, image, flavourText, type } = props.card
-
-    const typeToBg = {
-        "Normal": "rgba(189, 195, 199)",
-        "Fire": "rgba(255, 76, 48)",
-        "Water": "rgba(3, 138, 255)",
-        "Grass": "rgba(147, 250, 165)",
-        "Earth": "rgba(227, 186, 143)",
-        "Electric": "rgba(255, 255, 159)",
-        "Dark": "rgba(105, 105, 105)",
-        "Light": "rgba(250, 250, 250)",
+const props = defineProps({
+    card: {
+        type: Object,
+        required: true,
+    },
+    disableSingleView: {
+        type: Boolean,
+        required: false,
+        default: false,
     }
+})
 
-    const bgColor = ref(typeToBg[type])
+const { id, name, image, flavourText, type } = props.card
+const { disableSingleView } = props
+
+const typeToBg = {
+    "Normal": "rgba(189, 195, 199)",
+    "Fire": "rgba(255, 76, 48)",
+    "Water": "rgba(3, 138, 255)",
+    "Grass": "rgba(147, 250, 165)",
+    "Earth": "rgba(227, 186, 143)",
+    "Electric": "rgba(255, 255, 159)",
+    "Dark": "rgba(105, 105, 105)",
+    "Light": "rgba(250, 250, 250)",
+}
+
+const bgColor = ref(typeToBg[type])
+
+const router = useRouter()
+
+const handleCardClick = () => {
+    if (disableSingleView) return;
+
+    router.push({
+        path: `/card/${id}`
+    })
+}
 
 </script>
 
 <template>
-    <div class="card">
+    <div class="card" @click="handleCardClick">
         <p class="card-name"> {{ name }} </p>
         <img class="card-img" :src="image" :alt="name" rel="preload"/>
         <p class="card-flavour-txt"> " {{ flavourText }} " </p>

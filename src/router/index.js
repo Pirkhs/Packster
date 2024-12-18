@@ -28,9 +28,13 @@ const router = createRouter({
       component: () => import ('../views/ProfileView.vue')  
     },
     {
+      path: '/card/:cardId',
+      component: () => import('../views/SingleCardView.vue')
+    },
+    {
       path: '/:catchall(.*)*',
       component: () => import ('../views/404View.vue')
-    }
+    },
   ],
 })
 
