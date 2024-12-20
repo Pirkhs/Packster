@@ -1,65 +1,17 @@
 <script setup>
+import cards from '../../data/cards'
 import Card from './Card.vue'
 import Overlay from './Overlay.vue'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-
 const userId = localStorage.getItem("userId")
-
 if (!userId) {
     router.push({path: '/login'})
 }
 
-const featuredCards = [
-    {
-        id: 1,
-        name: "Zephara, the Time Weaver",
-        image: "https://i.postimg.cc/W3Nh4Z4s/image-x5njpn-RD-1731411315599-raw-1.jpg",
-        flavourText: "The past is a puzzle, the future a mystery. But the present? It is mine to command.",
-        type: "Light"
-    },
-    {
-        id: 2,
-        name: "Sylph of the Midnight Veil",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/d0923162-75b1-49c3-a168-e6f413878cc8.webp",
-        flavourText: "You cannot defeat what you cannot see. But you will feel my presence in your soul long after I'm gone.",
-        type: "Dark"
-    },
-    {
-        id: 3,
-        name: "Blazequake, Infernal Giant",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/844914bf-fac2-4de7-bdfa-693b3fe12a9d.webp",
-        flavourText: "Where I tread, the land shudders, the sky burns, and only the strongest survive.",
-        type: "Fire"
-    },
-]
-
-const packedCards = [    
-    {
-        id: 4,
-        name: "Sir Caelum, Oathbreaker",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/5c98e328-8172-4bfa-bf6c-0ddd4b5584c8.webp",
-        flavourText: "An oath once sworn can be a bond or a curse. I swore to both… and to none. ",
-        type: "Normal"
-    },
-    {
-        id: 2,
-        name: "Sylph of the Midnight Veil",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/d0923162-75b1-49c3-a168-e6f413878cc8.webp",
-        flavourText: "You cannot defeat what you cannot see. But you will feel my presence in your soul long after I'm gone.",
-        type: "Dark"
-    },
-    {
-        id: 3,
-        name: "Blazequake, Infernal Giant",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/844914bf-fac2-4de7-bdfa-693b3fe12a9d.webp",
-        flavourText: "Where I tread, the land shudders, the sky burns, and only the strongest survive.",
-        type: "Fire"
-    },
-    
-]
+const featuredCards = cards.slice(0, 3)
 
 const currCardIndex = ref(0)
 const canOpenPack = ref(true)
@@ -67,6 +19,18 @@ const isPackOpen = ref(false)
 const packQuantity = ref(0)
 const isModalOpen = ref(false)
 const isDropdownOpen = ref(false)
+
+const cardsInPack = 5
+const packedCards = ref([])
+
+const generatePack = () => {
+    const packedCardIds = Array(cardsInPack).fill(1).map(id => id * Math.floor(Math.random() * cards.length) + 1)
+    const packedCards = []
+    for (const id of packedCardIds) {
+        packedCards.push(cards.filter(card => card.id === id)[0])
+    }
+    return packedCards
+}
 
 const handleOpenModal = (quantity) => {
     packQuantity.value = quantity
@@ -78,11 +42,12 @@ const handleOpenModal = (quantity) => {
 const handleOpenPack = () => {
     canOpenPack.value = false
     isPackOpen.value = true
+    packedCards.value = generatePack()
 }
 
 const handleNextCard = () => {
     currCardIndex.value = currCardIndex.value + 1;
-    if (currCardIndex.value === packedCards.length) {
+    if (currCardIndex.value === packedCards.value.length) {
         packQuantity.value = packQuantity.value - 1
         handleNextPack()
         return;
@@ -138,7 +103,7 @@ const afterPackReturned = () => {
                             <transition name="fade">
                                 <button v-if="canOpenPack" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
                             </transition>
-                            <p id="info"> Contains 5 booster cards </p>
+                            <p id="info"> Contains {{ cardsInPack }} booster cards </p>
                         </div>
                     </div>
                 </transition>
