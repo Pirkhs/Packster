@@ -1,4 +1,5 @@
 <script setup>
+import cards from '../data/cards'
 import ProfileImage from './ProfileImage.vue'
 import Table from './Table.vue'
 import CardGallery from './CardGallery.vue'
@@ -11,22 +12,7 @@ const headers = ["Packs Opened", "Unique Cards", ...cardTypes.map(type => `${typ
 const testData = Array(headers.length).fill("________")
 
 // Fetch favourite cards 
-const favouriteCards = [    
-    {
-        id: 2,
-        name: "Sylph of the Midnight Veil",
-        image: "https://images.piclumen.com/normal/20241115/1857107894601269249/d0923162-75b1-49c3-a168-e6f413878cc8.webp",
-        flavourText: "You cannot defeat what you cannot see. But you will feel my presence in your soul long after I'm gone.",
-        type: "Dark"
-    },
-    {
-        id: 1,
-        name: "Zephara, the Time Weaver",
-        image: "https://i.postimg.cc/W3Nh4Z4s/image-x5njpn-RD-1731411315599-raw-1.jpg",
-        flavourText: "The past is a puzzle, the future a mystery. But the present? It is mine to command.",
-        type: "Light"
-    },
-]
+const favouriteCards = cards.slice(1)
 
 </script>
 

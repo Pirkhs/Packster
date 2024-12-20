@@ -27,6 +27,27 @@ const cards = [
         flavourText: "An oath once sworn can be a bond or a curse. I swore to both… and to none. ",
         type: "Normal"
     },
+    {
+        id: 5,
+        name: "Mystic Nomad of the Barren Dunes",
+        image: 'https://images.piclumen.com/normal/20241221/03/ff0b67c0e7ef4f15a6a73e66d64f889e.webp',
+        flavourText: "The desert winds whisper ancient secrets to those who listen... and the Mystic Nomad is one who listens well.",
+        type: "Earth"
+    },
+    {
+        id: 6,
+        name: "Arc Flash Assassin",
+        image: "https://images.piclumen.com/normal/20241221/03/cdf2ae16d78149348109dc4a8bb00a12.webp",
+        flavourText: "Swift as a spark, deadly as a storm. The Arc Flash Assassin strikes without warning, leaving only smoldering remains.",
+        type: "Electric",
+    },
+    {
+        id: 7,
+        name: 'Abyssal Leviathan',
+        image: "https://images.piclumen.com/normal/20241221/03/55b7f36010744baab1ec440bb30ffde3.webp",
+        flavourText: "From the depths of the ocean’s abyss, it rises—an ancient force of nature, unstoppable and unfathomable.",
+        type: "Water"
+    }
 ]
 
 export default cards

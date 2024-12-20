@@ -39,7 +39,7 @@ const { disableSingleView } = props
 const typeToBg = {
     "Normal": "rgba(189, 195, 199)",
     "Fire": "rgba(255, 76, 48)",
-    "Water": "rgba(3, 138, 255)",
+    "Water": "rgba(3, 138, 240)",
     "Grass": "rgba(147, 250, 165)",
     "Earth": "rgba(227, 186, 143)",
     "Electric": "rgba(255, 255, 159)",
@@ -73,6 +73,9 @@ const handleCardClick = () => {
 <style scoped>
 
 .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     padding: clamp(0.2rem, 2vw, 0.5rem);
     border-width: clamp(4px, 6px, 8px);
     border: solid lightgrey;
