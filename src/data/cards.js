@@ -29,7 +29,7 @@ const cards = [
     },
     {
         id: 5,
-        name: "Mystic Nomad of the Barren Dunes",
+        name: "Mystic Nomad",
         image: 'https://images.piclumen.com/normal/20241221/03/ff0b67c0e7ef4f15a6a73e66d64f889e.webp',
         flavourText: "The desert winds whisper ancient secrets to those who listen... and the Mystic Nomad is one who listens well.",
         type: "Earth"

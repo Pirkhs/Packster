@@ -5,6 +5,8 @@ import CardGallery from './CardGallery.vue'
 
 const cardCollection = cards
 
+/* TBF: Faulty Search Feature !!
+
 const searchResults = ref(cardCollection)
 const search = ref("")
 
@@ -12,18 +14,18 @@ watch(search, () => {
     searchResults.value = cardCollection.filter(card => card.name.toLowerCase().includes(search.value.toLowerCase()))
 })
 
+*/
+
 </script>
 
 <template>
     <div class="container-h1">
         <h1> My Collection </h1>
     </div>
-    <input v-model="search" type="text" placeholder="Search..."/>  
-    <CardGallery :cardGallery="searchResults"></CardGallery>
+    <input type="text" placeholder="Search..."/>  
+    <CardGallery :cardGallery="cardCollection"></CardGallery>
 
 </template>
-
-
 
 <style scoped>
 h1 {

@@ -1,5 +1,4 @@
 <script setup>
-import { watch, ref } from 'vue'
 import Card from './Card.vue'
 const {cardGallery} = defineProps(["cardGallery"])
 

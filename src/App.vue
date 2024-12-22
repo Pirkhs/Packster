@@ -1,8 +1,16 @@
 <script setup>
   import Header from './components/Header.vue'
   import Nav from './components/Nav.vue'
-  import { RouterLink, RouterView, useRoute } from 'vue-router'
+  import { RouterView, useRoute } from 'vue-router'
+  import { useRouter } from 'vue-router'
   const route = useRoute()
+  const router = useRouter()
+
+  const userId = localStorage.getItem("userId")
+  if (!userId) {
+      router.push({path: '/login'})
+  }
+
 </script>
 
 <template>

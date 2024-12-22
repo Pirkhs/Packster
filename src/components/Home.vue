@@ -3,13 +3,6 @@ import cards from '../data/cards'
 import Card from './Card.vue'
 import Overlay from './Overlay.vue'
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-
-const router = useRouter()
-const userId = localStorage.getItem("userId")
-if (!userId) {
-    router.push({path: '/login'})
-}
 
 const featuredCards = cards.slice(0, 3)
 
