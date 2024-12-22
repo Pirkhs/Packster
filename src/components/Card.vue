@@ -1,25 +1,6 @@
 <script setup>
-import { ref, watch, computed} from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useMouseInElement } from '@vueuse/core'
-const targetCard = ref(null)
-
-const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(targetCard)
-
-const cardTransform = computed(() => {
-    const MAX_ROTATION = 6
-    
-    const rX = (
-        MAX_ROTATION / 2 -
-        (elementY.value / elementHeight.value) * MAX_ROTATION
-    ).toFixed(2)
-    
-    const rY = (
-        (elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2
-    ).toFixed(2)
-
-    return isOutside.value ? '' : `perspective(${elementWidth.value}px) rotateX(${rx}deg) rotateY(${rY}deg)` 
-})
 
 const props = defineProps({
     card: {
