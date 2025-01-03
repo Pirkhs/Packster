@@ -16,7 +16,7 @@ const isDropdownOpen = ref(false)
 const cardsInPack = 5
 const packedCards = ref([])
 
-const generatePack = () => {
+const generatePackedCards = () => {
     const packedCardIds = Array(cardsInPack).fill(1).map(id => id * Math.floor(Math.random() * cards.length) + 1)
     const packedCards = []
     for (const id of packedCardIds) {
@@ -35,7 +35,7 @@ const handleOpenModal = (quantity) => {
 const handleOpenPack = () => {
     canOpenPack.value = false
     isPackOpen.value = true
-    packedCards.value = generatePack()
+    packedCards.value = generatePackedCards()
 }
 
 const handleNextCard = () => {
