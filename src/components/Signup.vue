@@ -37,15 +37,13 @@ const handleSignUp = () => {
 
             <br/>
 
-            <input value="Sign Up" type="submit"> 
+            <input class="btn-submit" value="Sign Up" type="submit"> 
         </form>
         <p> Already Have an Account? <RouterLink to="/login"> Log In </RouterLink> </p>
     </div>
 </template>
 
 <style scoped>
-
-
 .container-signup {
     display: flex;
     justify-content: center;
@@ -53,7 +51,7 @@ const handleSignUp = () => {
     margin: auto;
     width: 70%;
     padding: 2%;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.6);
     border: 1px solid black;
     border-radius: 5px;
 }
@@ -70,5 +68,11 @@ label {
 input {
     border: 1px solid black;
     width: 100%;
+}
+
+.btn-submit {
+    border-radius: 1rem;
+    background-color: rgba(0,0,255, 0.5);
+    color: white;
 }
 </style>

@@ -15,15 +15,17 @@
 
 <template>
   <Header></Header>
-  <div class="whitespace"></div>
-  <div class="content" >
-    <RouterView v-slot="{ Component }">
-      <transition name="fade-and-slide" mode="out-in">
-        <component :is="Component" />
-      </transition>
-    </RouterView>
+  <div :class="{'login-signup-bg': route.path === '/login' || route.path === '/signup'}">
+    <div class="whitespace"></div>
+    <div class="content" >
+      <RouterView v-slot="{ Component }">
+        <transition name="fade-and-slide" mode="out-in">
+          <component :is="Component" />
+        </transition>
+      </RouterView>
+    </div>
+    <div class="whitespace"></div>
   </div>
-  <div class="whitespace"></div>
   <Nav v-if='route.path !== `/login` && route.path !== `/signup`'></Nav>
 
 </template>
@@ -62,6 +64,14 @@
 .content {
   margin: 8%;
 }
+
+.login-signup-bg {
+  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/006/852/804/small_2x/abstract-blue-background-simple-design-for-your-website-free-vector.jpg');
+  background-color: #cccccc;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  }
 
 </style>
 
