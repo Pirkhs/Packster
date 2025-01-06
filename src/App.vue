@@ -66,7 +66,7 @@
 }
 
 .login-signup-bg {
-  background-image: url('https://static.vecteezy.com/system/resources/thumbnails/006/852/804/small_2x/abstract-blue-background-simple-design-for-your-website-free-vector.jpg');
+  background-image: url('https://i.pinimg.com/736x/bd/ac/32/bdac327b05ddaa05216dfa08c9e734c3.jpg');
   background-color: #cccccc;
   background-position: center;
   background-repeat: no-repeat;

@@ -35,7 +35,7 @@ const handleLogIn = () => {
                 </div>
                 <br/>
                 
-                <input class="btn-submit" value="Log In" type="submit"> 
+                <input class="btn-submit" value="Confirm" type="submit"> 
             </form>
         <p class="no-account"> Don't Have an Account? <RouterLink class="link" to="/signup"> Sign Up </RouterLink> </p>
     </div>
@@ -46,10 +46,12 @@ const handleLogIn = () => {
 
 h2 {
     font-size: xx-large;
-    font-weight: 800
+    font-weight: 800;
+    color: white;
 }
 
 .container-login {
+    background-image: url('https://i.ibb.co/yYLk269/packster-blrry-bg.png');
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -57,9 +59,10 @@ h2 {
     margin: auto;
     padding: 2%;
     background-color: rgba(255, 255, 255, 0.6);
-    border: 2px solid lightgrey;
+    border: 2px solid black;
     border-radius: 1rem;
     width: 15rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .form-flex {
