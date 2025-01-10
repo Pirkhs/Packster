@@ -51,14 +51,13 @@ h2 {
 }
 
 .container-login {
-    background-image: url('https://i.ibb.co/yYLk269/packster-blrry-bg.png');
+    background-color: rgba(255,255,255,0.1);
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
     margin: auto;
     padding: 2%;
-    background-color: rgba(255, 255, 255, 0.6);
     border: 2px solid black;
     border-radius: 1rem;
     width: 15rem;

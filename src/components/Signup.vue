@@ -53,7 +53,7 @@ h2 {
 }
 
 .container-signup {
-    background-image: url('https://i.ibb.co/yYLk269/packster-blrry-bg.png');
+    background-color: rgba(255,255,255,0.1);
     display: flex;
     justify-content: center;
     flex-direction: column;
