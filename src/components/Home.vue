@@ -3,6 +3,7 @@ import cards from '../data/cards'
 import Card from './Card.vue'
 import Overlay from './Overlay.vue'
 import { ref } from 'vue'
+import { getAllCards, getCardById } from '../../axios'
 
 const featuredCards = cards.slice(0, 3)
 
