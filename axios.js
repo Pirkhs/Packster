@@ -13,3 +13,6 @@ export function getCardById(id) {
     return packsterAPI.get(`/cards/${id}`)
 }
 
+export function postUser(user){
+    return packsterAPI.post(`/users`, user)
+}
