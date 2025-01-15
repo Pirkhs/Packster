@@ -20,9 +20,14 @@ mongoose.connect(CONNECTION_STRING)
 .catch(err => console.log(err))
 
 app.post('/api/packster/users', (req,res) => {
-    const user = new User(req.body)
-    user.save()
-    .then(result => res.send(result))
+    const doesUserExist = User.exists({ email: req.body.email })
+    .then(userExists => {
+        if (userExists) throw new Error("User already exists with this email")
+        
+        const newUser = new User(req.body)
+        newUser.save()
+        .then(result => res.send(result))
+    })
     .catch(err => console.log(err))
 })
 
