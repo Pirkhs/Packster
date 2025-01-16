@@ -2,6 +2,7 @@
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { postUser } from '../../axios'
 
 const router = useRouter()
 
@@ -10,8 +11,14 @@ const usernameInput = ref("")
 const passwordInput = ref("")
 
 const handleSignUp = () => {
-   // Check inputs and create new account
+   const newUser = {
+    username: usernameInput.value,
+    password: passwordInput.value,
+    email: emailInput.value
+   }
+   postUser(newUser)
 
+   
    router.push({path: `/login`})
 
 }
