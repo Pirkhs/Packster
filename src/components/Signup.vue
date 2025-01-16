@@ -3,24 +3,30 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { postUser } from '../../axios'
+import password from '../../server/password'
 
 const router = useRouter()
-
 const emailInput = ref("")
 const usernameInput = ref("")
 const passwordInput = ref("")
+const errorMsg = ref("")
 
 const handleSignUp = () => {
-   const newUser = {
-    username: usernameInput.value,
-    password: passwordInput.value,
-    email: emailInput.value
-   }
-   postUser(newUser)
+    const allowedCharacters = /[^A-Za-z1-9!#$%&'*+-/=?^_`@{|}~\-\.]+/
+    // Front-End Form Validation Tests
+    if (!emailInput.value || !usernameInput.value || !passwordInput.value) return errorMsg.value = "Please fill in all available fields";
+    if (usernameInput.value.length > 16) return errorMsg.value = "Username is too long";
+    if (usernameInput.value.match(allowedCharacters || passwordInput.value.match(allowedCharacters) || emailInput.value.match(allowedCharacters))) return errorMsg.value = "Prohibted characters used"
+    
+    const userToPost = {
+        username: usernameInput.value,
+        password: passwordInput.value,
+        email: emailInput.value
+    }
 
-   
-   router.push({path: `/login`})
-
+    postUser(userToPost)
+    .then(() => router.push({path: `/login`}))
+    .catch(err => errorMsg.value = err)
 }
 
 </script>
@@ -29,25 +35,35 @@ const handleSignUp = () => {
     <div class="container-signup"> 
         <h2> Sign Up </h2>
         <form @submit.prevent="handleSignUp" class="form-flex">
+
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'envelope']" />
                 <input id="email" type="text" v-model="emailInput" placeholder="Email">
             </div>
+            <p class="caption"> Must be unique </p>
+
             <br/>
+
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'user']" />
                 <input id="username" type="text" v-model="usernameInput" placeholder="Username">
             </div>
+            <p class="caption"> Max 16 characters </p>
+
             <br/>
+            
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'lock']" />
                 <input id="password" type="text" v-model="passwordInput" placeholder="Password">
             </div>
+            <p class="caption"> Keep secure </p>
+
             <br/>
 
             <input class="btn-submit" value="Confirm" type="submit"> 
         </form>
         <p style="font-size: small"> Already Have an Account? <RouterLink to="/login" class="link"> Log In </RouterLink> </p>
+        <p class="error-msg" v-if="errorMsg"> {{ errorMsg }}</p>
     </div>
 </template>
 
@@ -102,6 +118,12 @@ input:focus {
     outline: none;
 }
 
+.caption {
+    font-style: italic;
+    margin-top: 0;
+    font-size: small;
+}
+
 .btn-submit {
     border-radius: 1rem;
     background-color: rgba(0,0,255, 0.5);
@@ -114,5 +136,11 @@ input:focus {
     text-decoration: none;
     color: white;
     font-weight: bold;
+}
+
+.error-msg{
+    color: red;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+
 }
 </style>

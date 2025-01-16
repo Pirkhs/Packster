@@ -36,18 +36,15 @@ app.post('/api/packster/users', (req,res) => {
         return newUser.save()
     })
     .then(result => res.send(result))
-    .catch(err => console.log(err))
 })
 
 app.get('/api/packster/cards', (req, res) => {
     Card.find()
     .then(result => res.send(result))
-    .catch(err => console.log(err))
 })
 
 app.get('/api/packster/cards/:id', (req,res) => {
     Card.findById(req.params.id)
     .then(result => res.send(result))
-    .catch(err => console.log(err))
 })
 
