@@ -3,7 +3,6 @@
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { postUser } from '../../axios'
-import password from '../../server/password'
 
 const router = useRouter()
 const emailInput = ref("")
@@ -12,12 +11,6 @@ const passwordInput = ref("")
 const errorMsg = ref("")
 
 const handleSignUp = () => {
-    const allowedCharacters = /[^A-Za-z1-9!#$%&'*+-/=?^_`@{|}~\-\.]+/
-    // Front-End Form Validation Tests
-    if (!emailInput.value || !usernameInput.value || !passwordInput.value) return errorMsg.value = "Please fill in all available fields";
-    if (usernameInput.value.length > 16) return errorMsg.value = "Username is too long";
-    if (usernameInput.value.match(allowedCharacters || passwordInput.value.match(allowedCharacters) || emailInput.value.match(allowedCharacters))) return errorMsg.value = "Prohibted characters used"
-    
     const userToPost = {
         username: usernameInput.value,
         password: passwordInput.value,
@@ -25,8 +18,8 @@ const handleSignUp = () => {
     }
 
     postUser(userToPost)
-    .then(() => router.push({path: `/login`}))
-    .catch(err => errorMsg.value = err)
+    .then((res) => {router.push({path: `/login`})    })
+    .catch(err => {errorMsg.value = err.response.data.errors})
 }
 
 </script>
@@ -35,7 +28,8 @@ const handleSignUp = () => {
     <div class="container-signup"> 
         <h2> Sign Up </h2>
         <form @submit.prevent="handleSignUp" class="form-flex">
-
+            
+            <p class="error-msg" v-if="errorMsg.email"> {{errorMsg.email}}  </p>
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'envelope']" />
                 <input id="email" type="text" v-model="emailInput" placeholder="Email">
@@ -44,6 +38,7 @@ const handleSignUp = () => {
 
             <br/>
 
+            <p class="error-msg" v-if="errorMsg.username"> {{errorMsg.username}}  </p>
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'user']" />
                 <input id="username" type="text" v-model="usernameInput" placeholder="Username">
@@ -52,6 +47,7 @@ const handleSignUp = () => {
 
             <br/>
             
+            <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'lock']" />
                 <input id="password" type="text" v-model="passwordInput" placeholder="Password">
@@ -63,7 +59,6 @@ const handleSignUp = () => {
             <input class="btn-submit" value="Confirm" type="submit"> 
         </form>
         <p style="font-size: small"> Already Have an Account? <RouterLink to="/login" class="link"> Log In </RouterLink> </p>
-        <p class="error-msg" v-if="errorMsg"> {{ errorMsg }}</p>
     </div>
 </template>
 
@@ -120,7 +115,7 @@ input:focus {
 
 .caption {
     font-style: italic;
-    margin-top: 0;
+    margin: 0;
     font-size: small;
 }
 
@@ -139,8 +134,11 @@ input:focus {
 }
 
 .error-msg{
+    font-weight: bold;
+    font-size: small;
     color: red;
     text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    margin: 0
 
 }
 </style>

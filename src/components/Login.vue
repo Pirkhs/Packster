@@ -1,34 +1,42 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { getUserByUsername } from '../../axios'
 
 const router = useRouter()
 
 const usernameInput = ref("")
 const passwordInput = ref("")
+const errorMsg = ref({})
 
 const handleLogIn = () => {
     // Check details with database
+    getUserByUsername(usernameInput.value)
+    .then(res => {
+        const user = res.data[0]
+        if (user.password !== passwordInput.value) throw {path: "password", message: "Password is incorrect"}
 
-    localStorage.clear()
+        localStorage.clear()
+        localStorage.setItem("userId", user._id )
 
-    // Fetch user id
-    localStorage.setItem("userId", 1)
-
-    router.push({path: `/`})
-
+        router.push({path: `/`})
+    })
+    .catch(err => {
+        errorMsg.value[err.path] = err.message
+    })
 }
 </script>
 
 <template>
-        <div class="container-login"> 
-            <h2> Log In </h2>
-            <form @submit.prevent="handleLogIn" class="form-flex">
+    <div class="container-login"> 
+        <h2> Log In </h2>
+        <form @submit.prevent="handleLogIn" class="form-flex">
                 <div class="container-input">
                     <font-awesome-icon :icon="['fas', 'user']" />
                     <input id="username" v-model="usernameInput" type="text" placeholder="Username">
                 </div>
                 <br/>
+                <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
                 <div class="container-input">
                     <font-awesome-icon :icon="['fas', 'lock']" />
                     <input id="password" v-model="passwordInput" type="text" placeholder="Password">
@@ -109,4 +117,14 @@ input:focus {
     color: white;
     font-weight: bold;
 }
+
+.error-msg{
+    font-weight: bold;
+    font-size: small;
+    color: red;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    margin: 0
+
+}
+
 </style>

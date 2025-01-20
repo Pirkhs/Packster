@@ -17,3 +17,7 @@ export function getCardById(id) {
 export function postUser(user){
     return packsterAPI.post(`/users`, user)
 }
+
+export function getUserByUsername(username){
+    return packsterAPI.get(`/users/${username}`)
+}
