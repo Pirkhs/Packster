@@ -1,8 +1,11 @@
 import User from '../models/user.js'
 import Card from '../models/card.js'
+import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
+import { JWT_SECRET, JWT_EXPIRES_IN } from './secret.js'
 
-export const handleErrors = (err) => {
+
+const handleErrors = (err) => {
 
     let errors = {email: "", username: "", password: ""}
 
@@ -16,23 +19,34 @@ export const handleErrors = (err) => {
     return errors
 }
 
+const createToken = (id) => {
+    return jwt.sign({ id }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN})
+}
+
 export const signupPost = (req,res) => {
     User.exists({ email: req.body.email })
     .then(userExists => {
         if (userExists) throw {path: "email", message: "Email already taken"}
+
         if (!req.body.password) return 
-        
         return bcrypt.hash(req.body.password, 10)
     })
     .then((hash) => {
-        const newUser = new User({
+        return User.create({
             username: req.body.username,
             password: hash,
             email: req.body.email,
         })
-        return newUser.save()
     })
-    .then(result => res.send(result))
+    .then(newUser => {
+        const token = createToken(newUser._id)
+        res.cookie('jwt', token, { httpOnly: true, maxAge: JWT_EXPIRES_IN * 1000})
+        res.status(201).send({
+            status: 'success',
+            token,
+            data: newUser
+        })
+    })
     .catch(err => {
         const errors = handleErrors(err)
         res.status(400).json({ errors })
@@ -55,12 +69,12 @@ export const loginGet = (req, res) => {
 
 export const getCards = (req, res) => {
     Card.find()
-    .then(result => res.send(result))
+    .then(result => res.status(200).send(result))
     .catch(err => res.status(400).send(err))
 }
 
 export const getSingleCard = (req,res) => {
     Card.findById(req.params.id)
-    .then(result => res.send(result))
+    .then(result => res.status(200).send(result))
     .catch(err => res.status(400).send(err))
 }

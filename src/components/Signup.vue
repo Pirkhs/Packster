@@ -50,7 +50,7 @@ const handleSignUp = () => {
             <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
             <div class="container-input">
                 <font-awesome-icon :icon="['fas', 'lock']" />
-                <input id="password" type="text" v-model="passwordInput" placeholder="Password">
+                <input id="password" type="password" v-model="passwordInput" placeholder="Password" autocomplete="password">
             </div>
             <p class="caption"> Keep secure </p>
 
