@@ -33,13 +33,13 @@ const handleLogIn = () => {
         <form @submit.prevent="handleLogIn" class="form-flex">
                 <div class="container-input">
                     <font-awesome-icon :icon="['fas', 'user']" />
-                    <input id="username" v-model="usernameInput" type="text" placeholder="Username">
+                    <input id="username" v-model="usernameInput" type="text" placeholder="Username" autocomplete="username">
                 </div>
                 <br/>
                 <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
                 <div class="container-input">
                     <font-awesome-icon :icon="['fas', 'lock']" />
-                    <input id="password" v-model="passwordInput" type="text" placeholder="Password">
+                    <input id="password" v-model="passwordInput" type="password" placeholder="Password" autocomplete="current-password">
                 </div>
                 <br/>
                 
