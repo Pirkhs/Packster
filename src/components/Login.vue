@@ -14,6 +14,7 @@ const handleLogIn = () => {
     getUserByUsername(usernameInput.value)
     .then(res => {
         const user = res.data[0]
+        console.log(user)
         if (user.password !== passwordInput.value) throw {path: "password", message: "Password is incorrect"}
 
         localStorage.clear()
@@ -31,12 +32,12 @@ const handleLogIn = () => {
     <div class="container-login"> 
         <h2> Log In </h2>
         <form @submit.prevent="handleLogIn" class="form-flex">
-                <div class="container-input">
-                    <font-awesome-icon :icon="['fas', 'user']" />
-                    <input id="username" v-model="usernameInput" type="text" placeholder="Username" autocomplete="username">
-                </div>
-                <br/>
-                <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
+            <div class="container-input">
+                <font-awesome-icon :icon="['fas', 'user']" />
+                <input id="username" v-model="usernameInput" type="text" placeholder="Username" autocomplete="username">
+            </div>
+            <br/>
+            <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
                 <div class="container-input">
                     <font-awesome-icon :icon="['fas', 'lock']" />
                     <input id="password" v-model="passwordInput" type="password" placeholder="Password" autocomplete="current-password">
