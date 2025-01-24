@@ -2,7 +2,7 @@
 
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { postUser } from '../../axios'
+import { signupUser } from '../../axios'
 
 const router = useRouter()
 const emailInput = ref("")
@@ -17,7 +17,7 @@ const handleSignUp = () => {
         email: emailInput.value
     }
 
-    postUser(userToPost)
+    signupUser(userToPost)
     .then((res) => {router.push({path: `/login`})    })
     .catch(err => {errorMsg.value = err.response.data.errors})
 }

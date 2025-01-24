@@ -54,17 +54,9 @@ export const signupPost = (req,res) => {
 }
 
 // !! WIP
-export const loginGet = (req, res) => {
-    res.status(500).send("WIP")
-    /*
-    User.find().select({ username: req.params.username, password})
-    .then(result => {
-        res.send(result)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-    */
+export const loginPost = (req, res) => {
+    const {username, password} = req.body
+    res.status(500).send(req.body)
 }
 
 export const getCards = (req, res) => {

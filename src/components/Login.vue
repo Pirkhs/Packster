@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref } from 'vue'
-import { getUserByUsername } from '../../axios'
+import { loginUser } from '../../axios'
 
 const router = useRouter()
 
@@ -10,16 +10,12 @@ const passwordInput = ref("")
 const errorMsg = ref({})
 
 const handleLogIn = () => {
-    // Check details with database
-    getUserByUsername(usernameInput.value)
+    const userToLogIn = {
+        username: usernameInput.value,
+        password: passwordInput.value,
+    }
+    loginUser(userToLogIn)
     .then(res => {
-        const user = res.data[0]
-        console.log(user)
-        if (user.password !== passwordInput.value) throw {path: "password", message: "Password is incorrect"}
-
-        localStorage.clear()
-        localStorage.setItem("userId", user._id )
-
         router.push({path: `/`})
     })
     .catch(err => {

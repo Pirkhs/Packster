@@ -4,7 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 import password from './password.js'
-import { getCards, signupPost, loginGet, getSingleCard } from '../controllers/authControllers.js'
+import { getCards, signupPost, loginPost, getSingleCard } from '../controllers/authControllers.js'
 
 const app = express()
 
@@ -26,9 +26,9 @@ mongoose.connect(CONNECTION_STRING)
 })
 .catch(err => console.log(err))
 
-app.post('/api/packster/users', signupPost)
+app.post('/api/packster/signup', signupPost)
 
-app.get('/api/packster/users/:username', loginGet)
+app.post('/api/packster/login', loginPost)
 
 app.get('/api/packster/cards', getCards)
 

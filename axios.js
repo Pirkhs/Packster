@@ -15,10 +15,10 @@ export function getCardById(id) {
     return packsterAPI.get(`/cards/${id}`)
 }
 
-export function postUser(user){
-    return packsterAPI.post(`/users`, user)
+export function signupUser(user){
+    return packsterAPI.post(`/signup`, user)
 }
 
-export function getUserByUsername(username){
-    return packsterAPI.get(`/users/${username}`)
+export function loginUser(user){
+    return packsterAPI.post(`/login`, user)
 }
