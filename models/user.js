@@ -1,5 +1,7 @@
 import mongoose from 'mongoose'
 import validator from 'validator'
+import bcrypt from 'bcryptjs'
+
 const { isEmail } = validator
 
 const Schema = mongoose.Schema;
@@ -20,6 +22,17 @@ const userSchema = new Schema({
         required: [true, "Password field required"]
     }
 }, {timestamps: true})
+
+// static method to login user
+userSchema.statics.login = async function(email, password) {
+    const user = await this.findOne({ email });
+    if (!user) throw {path: "email", message: "Email is not registered"}
+    
+    const auth = await bcrypt.compare(password, user.password)
+    if (!auth) throw {path: 'password', message: 'Password is incorrect'}
+     
+    return user
+}
 
 const User = mongoose.model('User', userSchema)
 export default User

@@ -6,7 +6,6 @@ import { JWT_SECRET, JWT_EXPIRES_IN } from './secret.js'
 
 
 const handleErrors = (err) => {
-
     let errors = {email: "", username: "", password: ""}
 
     if (err.message.includes('User validation failed')) {
@@ -55,8 +54,18 @@ export const signupPost = (req,res) => {
 
 // !! WIP
 export const loginPost = (req, res) => {
-    const {username, password} = req.body
-    res.status(500).send(req.body)
+    const {email, password} = req.body
+
+    User.login(email, password)
+    .then((user) => {
+        const token = createToken(user._id)
+        res.cookie('jwt', token, { httpOnly: true, maxAge: JWT_EXPIRES_IN * 1000})
+        res.status(200).send({user})
+    })
+    .catch(err => {
+        const errors = handleErrors(err)
+        res.status(400).json({errors})
+    })
 }
 
 export const getCards = (req, res) => {

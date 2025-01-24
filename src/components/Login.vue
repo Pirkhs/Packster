@@ -5,13 +5,13 @@ import { loginUser } from '../../axios'
 
 const router = useRouter()
 
-const usernameInput = ref("")
+const emailInput = ref("")
 const passwordInput = ref("")
-const errorMsg = ref({})
+const errorMsg = ref("")
 
 const handleLogIn = () => {
     const userToLogIn = {
-        username: usernameInput.value,
+        email: emailInput.value,
         password: passwordInput.value,
     }
     loginUser(userToLogIn)
@@ -19,7 +19,7 @@ const handleLogIn = () => {
         router.push({path: `/`})
     })
     .catch(err => {
-        errorMsg.value[err.path] = err.message
+        errorMsg.value = err.response.data.errors
     })
 }
 </script>
@@ -28,9 +28,10 @@ const handleLogIn = () => {
     <div class="container-login"> 
         <h2> Log In </h2>
         <form @submit.prevent="handleLogIn" class="form-flex">
+            <p class="error-msg" v-if="errorMsg.email"> {{errorMsg.email}}  </p>
             <div class="container-input">
-                <font-awesome-icon :icon="['fas', 'user']" />
-                <input id="username" v-model="usernameInput" type="text" placeholder="Username" autocomplete="username">
+                <font-awesome-icon :icon="['fas', 'envelope']" />
+                <input id="email" v-model="emailInput" type="text" placeholder="Email" autocomplete="email">
             </div>
             <br/>
             <p class="error-msg" v-if="errorMsg.password"> {{errorMsg.password}}  </p>
