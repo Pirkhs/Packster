@@ -79,3 +79,18 @@ export const getSingleCard = (req,res) => {
     .then(result => res.status(200).send(result))
     .catch(err => res.status(400).send(err))
 }
+
+export const verifyToken = async (req, res) => {
+    try {
+        const token = req.cookies.jwt
+        if (!token) throw {status: 400, message: "No token could be found"}
+        
+        jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
+            if (err) throw {status: 400, message: err.message}
+            res.status(200).send(decodedToken)
+        })
+    }
+    catch(err) {
+        res.status(err.status).send(err.message)
+    }
+}

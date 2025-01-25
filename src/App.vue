@@ -1,15 +1,16 @@
 <script setup>
-  import Header from './components/Header.vue'
-  import Nav from './components/Nav.vue'
-  import { RouterView, useRoute } from 'vue-router'
-  import { useRouter } from 'vue-router'
-  const route = useRoute()
-  const router = useRouter()
+import { getCookies } from '../axios'
+import Header from './components/Header.vue'
+import Nav from './components/Nav.vue'
+import { RouterView, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 
-  const userId = localStorage.getItem("userId")
-  if (!userId) {
-      router.push({path: '/login'})
-  }
+const route = useRoute()
+const router = useRouter()
+
+getCookies()
+.then(res => {return})
+.catch(err => router.push({path: '/login'}))
 
 </script>
 

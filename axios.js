@@ -22,3 +22,7 @@ export function signupUser(user){
 export function loginUser(user){
     return packsterAPI.post(`/login`, user)
 }
+
+export function getCookies(){
+    return packsterAPI.get(`/cookies`)
+}

@@ -18,7 +18,7 @@ const handleSignUp = () => {
     }
 
     signupUser(userToPost)
-    .then((res) => {router.push({path: `/login`})    })
+    .then((res) => {router.push({path: `/login`})})
     .catch(err => {errorMsg.value = err.response.data.errors})
 }
 
