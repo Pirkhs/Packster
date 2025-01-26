@@ -52,7 +52,6 @@ export const signupPost = (req,res) => {
     })
 }
 
-// !! WIP
 export const loginPost = (req, res) => {
     const {email, password} = req.body
 
@@ -93,4 +92,15 @@ export const verifyToken = async (req, res) => {
     catch(err) {
         res.status(err.status).send(err.message)
     }
+}
+
+export const logoutGet = (req, res) => {
+    res.cookie('jwt', 'none', {
+        maxAge: 1,
+        httpOnly: true
+    })
+    res.status(200).json({
+        status: 'success',
+        data: {}
+    })
 }

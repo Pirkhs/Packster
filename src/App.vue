@@ -1,5 +1,5 @@
 <script setup>
-import { getCookies } from '../axios'
+import { requireAuth } from '../axios'
 import Header from './components/Header.vue'
 import Nav from './components/Nav.vue'
 import { RouterView, useRoute } from 'vue-router'
@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 const route = useRoute()
 const router = useRouter()
 
-getCookies()
+requireAuth()
 .then(res => {return})
 .catch(err => router.push({path: '/login'}))
 

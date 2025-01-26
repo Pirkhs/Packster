@@ -23,6 +23,10 @@ export function loginUser(user){
     return packsterAPI.post(`/login`, user)
 }
 
-export function getCookies(){
-    return packsterAPI.get(`/cookies`)
+export function requireAuth(){
+    return packsterAPI.get(`/auth`)
+}
+
+export function logoutUser(){
+    return packsterAPI.get('/logout')
 }

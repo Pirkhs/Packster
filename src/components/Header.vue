@@ -1,6 +1,7 @@
 <script setup>
+import { logoutUser } from '../../axios';
 import ProfileImage from './ProfileImage.vue'
-import { RouterLink, useRoute, useRouter } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 
 const route = useRoute()
 </script>
@@ -13,7 +14,7 @@ const route = useRoute()
         <ProfileImage/>
       </RouterLink>
       <RouterLink to="/login">
-        <button> Sign Out </button>
+        <button @click="logoutUser()"> Log Out </button>
       </RouterLink>
     </div>
   </header>
