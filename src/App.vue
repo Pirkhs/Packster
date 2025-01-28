@@ -3,7 +3,6 @@ import Header from './components/Header.vue'
 import Nav from './components/Nav.vue'
 import { RouterView, useRoute } from 'vue-router'
 
-
 const route = useRoute()
 
 </script>

@@ -104,3 +104,19 @@ export const logoutGet = (req, res) => {
         data: {}
     })
 }
+
+export const checkUser = (req, res) => {
+    try {
+        const token = req.cookies.jwt
+        if (!token) throw {status: 400, message: "No token could be found"}
+        
+        jwt.verify(token, JWT_SECRET, async (err, decodedToken) => {
+            if (err) throw {status: 400, message: err.message}
+            let user = await User.findById(decodedToken.id)
+            res.status(200).send(user)
+        })
+    }
+    catch(err) {
+        res.status(err.status).send(err.message)
+    }
+}

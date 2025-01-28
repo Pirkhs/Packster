@@ -4,7 +4,7 @@ import cors from 'cors'
 import cookieParser from 'cookie-parser'
 
 import password from './password.js'
-import { getCards, signupPost, loginPost, getSingleCard, verifyToken, logoutGet } from '../controllers/authControllers.js'
+import { getCards, signupPost, loginPost, getSingleCard, verifyToken, logoutGet, checkUser } from '../controllers/authControllers.js'
 
 const app = express()
 
@@ -37,3 +37,5 @@ app.get('/api/packster/cards/:id', getSingleCard )
 app.get('/api/packster/auth', verifyToken)
 
 app.get('/api/packster/logout', logoutGet)
+
+app.get('/api/packster/user', checkUser)

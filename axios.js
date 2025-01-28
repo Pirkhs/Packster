@@ -30,3 +30,7 @@ export function requireAuth(){
 export function logoutUser(){
     return packsterAPI.get('/logout')
 }
+
+export function getUserByToken(){
+    return packsterAPI.get('user')
+}

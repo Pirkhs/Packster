@@ -1,15 +1,29 @@
 <script setup>
-import { logoutUser } from '../../axios';
+import { watch, ref } from 'vue';
+import { getUserByToken, logoutUser } from '../../axios';
 import ProfileImage from './ProfileImage.vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 
+const user = ref({})
 const route = useRoute()
+const router = useRouter()
+
+watch(
+  () => router.currentRoute.value, currentRoute => {
+        if (currentRoute.path === '/login' || currentRoute.path === '/signup' ) return
+        getUserByToken()
+        .then(res => user.value = res.data)
+        .catch(err => {return})
+  },
+)
+
 </script>
 
 <template>
     <header >
     <h1> Packster </h1>
     <div v-if='route.path !== `/login` && route.path !== `/signup`' class="container-profile-img">
+      <p v-if="user"> {{ user.username }} </p>
       <RouterLink to="/profile">
         <ProfileImage/>
       </RouterLink>
@@ -40,6 +54,7 @@ header {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px,
 }
 
 </style>
