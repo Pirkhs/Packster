@@ -2,24 +2,28 @@
 import cards from '../data/cards'
 import { useRoute } from 'vue-router'
 import Card from '../components/Card.vue'
+import { getCardById } from '../../axios'
+import { ref } from 'vue'
+
 const route = useRoute()
-const cardId = +route.params.cardId
 
-// Fetch card data using cardId
-// ...
+const errorMsg = ref(null)
+const cardId = route.params.cardId
+const card = ref(null)
 
-// Construct card object to be passed into Card component
-// ..
-
-const card = cards.filter(card => card.id === cardId)[0]
+getCardById(cardId)
+.then(res => {card.value = res.data})
+.catch(err => errorMsg.value = err.message)
 
 </script>
 
 <template>
     <main>
-        <div class="container-single-card">
+        <div v-if="card" class="container-single-card">
             <Card class="single-card" :card="card"/>
         </div>
+        <div v-else-if="errorMsg"> {{ errorMsg }}</div>
+        <div v-else> Loading Card...</div>
     </main>
 </template>
 

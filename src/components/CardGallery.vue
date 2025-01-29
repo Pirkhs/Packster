@@ -1,7 +1,6 @@
 <script setup>
 import Card from './Card.vue'
 const {cardGallery} = defineProps(["cardGallery"])
-
 </script>
 
 <template>

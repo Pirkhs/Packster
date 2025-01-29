@@ -2,8 +2,16 @@
 import cards from '../data/cards.js'
 import { ref, watch } from 'vue'
 import CardGallery from './CardGallery.vue' 
+import { getAllCards } from '../../axios.js';
 
-const cardCollection = cards
+const cardCollection = ref([])
+
+getAllCards()
+.then(res => {
+    cardCollection.value = res.data
+}
+)
+
 
 /* TBF: Faulty Search Feature !!
 
@@ -23,7 +31,7 @@ watch(search, () => {
         <h1> My Collection </h1>
     </div>
     <input type="text" placeholder="Search..."/>  
-    <CardGallery :cardGallery="cardCollection"></CardGallery>
+    <CardGallery v-if="cardCollection.length" :cardGallery="cardCollection"></CardGallery>
 
 </template>
 

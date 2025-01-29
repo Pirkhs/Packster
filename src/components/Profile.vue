@@ -3,6 +3,13 @@ import cards from '../data/cards'
 import ProfileImage from './ProfileImage.vue'
 import Table from './Table.vue'
 import CardGallery from './CardGallery.vue'
+import { getUserByToken } from '../../axios'
+import { ref } from 'vue'
+
+const currentUser = ref({})
+
+getUserByToken()
+.then(res => currentUser.value = res.data)
 
 // Fetch card types
 const cardTypes = ["Normal", "Fire", "Water", "Grass", "Earth", "Electric", "Dark", "Light"]
@@ -21,7 +28,7 @@ const favouriteCards = cards.slice(1)
         <div class="container-profile">
             <ProfileImage ref="profileimage" class="profile-img"/>
             <div class="container-username">
-                <p> Username  </p>
+                <p> {{ currentUser.username }}  </p>
                 <font-awesome-icon :icon="['fas', 'pencil']" />
             </div>
         </div>

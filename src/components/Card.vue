@@ -14,7 +14,9 @@ const props = defineProps({
     }
 })
 
-const { id, name, image, flavourText, type } = props.card
+const id = props.card._id
+const { name, image, flavourText, type } = props.card
+
 const { disableSingleView } = props
 
 const typeToBg = {
