@@ -1,10 +1,9 @@
 <script setup>
+import { getAllCards } from '../../axios'
 import cards from '../data/cards'
 import Card from './Card.vue'
 import Overlay from './Overlay.vue'
 import { ref } from 'vue'
-
-const featuredCards = cards.slice(0, 3)
 
 const currCardIndex = ref(0)
 const canOpenPack = ref(true)
@@ -12,9 +11,14 @@ const isPackOpen = ref(false)
 const packQuantity = ref(0)
 const isModalOpen = ref(false)
 const isDropdownOpen = ref(false)
+const featuredCards = ref(null)
 
 const cardsInPack = 5
 const packedCards = ref([])
+
+getAllCards()
+.then(res => featuredCards.value = res.data.slice(0,3))
+.catch(err => console.log(err))
 
 const generatePackedCards = () => {
     const packedCardIds = Array(cardsInPack).fill(1).map(id => id * Math.floor(Math.random() * cards.length) + 1)
