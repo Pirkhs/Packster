@@ -10,7 +10,7 @@ const router = useRouter()
 
 watch(
   () => router.currentRoute.value, currentRoute => {
-        if (currentRoute.path === '/login' || currentRoute.path === '/signup' ) return
+        if (currentRoute.path === '/login' || currentRoute.path === '/signup' ) return user.value = {}
         getUserByToken()
         .then(res => user.value = res.data)
         .catch(err => {return})
