@@ -1,5 +1,5 @@
 <script setup>
-import { getAllCards } from '../../axios'
+import { getAllCards, getRandomCards } from '../../axios'
 import cards from '../data/cards'
 import Card from './Card.vue'
 import Overlay from './Overlay.vue'
@@ -12,21 +12,26 @@ const packQuantity = ref(0)
 const isModalOpen = ref(false)
 const isDropdownOpen = ref(false)
 const featuredCards = ref(null)
+const packError = ref(null)
 
-const cardsInPack = 5
+const CARDS_IN_PACK = 5
 const packedCards = ref([])
 
 getAllCards()
-.then(res => featuredCards.value = res.data.slice(0,3))
+.then(res => {featuredCards.value = res.data.slice(0,3)})
 .catch(err => console.log(err))
 
 const generatePackedCards = () => {
-    const packedCardIds = Array(cardsInPack).fill(1).map(id => id * Math.floor(Math.random() * cards.length) + 1)
-    const packedCards = []
-    for (const id of packedCardIds) {
-        packedCards.push(cards.filter(card => card.id === id)[0])
-    }
-    return packedCards
+    getRandomCards(CARDS_IN_PACK)
+    .then(res => packedCards.value = res.data)
+    .catch(err => packError.value = {
+        _id: "N/A",
+        name: "Unexpected Error",
+        image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
+        flavourText: "There was an error whilst generating pack contents. Please try again",
+        type: "Dark"
+
+    })
 }
 
 const handleOpenModal = (quantity) => {
@@ -43,9 +48,9 @@ const handleOpenPack = () => {
 }
 
 const handleNextCard = () => {
-    currCardIndex.value = currCardIndex.value + 1;
+    currCardIndex.value += 1;
     if (currCardIndex.value === packedCards.value.length) {
-        packQuantity.value = packQuantity.value - 1
+        packQuantity.value -= 1
         handleNextPack()
         return;
     }
@@ -88,7 +93,11 @@ const afterPackReturned = () => {
                     :card="card"
                     :disableSingleView="true"></Card>
                 </transition>
+                
             </div>
+            
+            <Card class="packed-card" :disableSingleView="true" :card="packError" v-if="packError"></Card>
+
 
             <div class="container-modal-flex">
 
@@ -100,7 +109,7 @@ const afterPackReturned = () => {
                             <transition name="fade">
                                 <button v-if="canOpenPack" class="btn-open-pack" @click="handleOpenPack"> Open Pack </button>
                             </transition>
-                            <p id="info"> Contains {{ cardsInPack }} booster cards </p>
+                            <p id="info"> Contains {{ CARDS_IN_PACK }} booster cards </p>
                         </div>
                     </div>
                 </transition>

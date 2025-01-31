@@ -120,3 +120,10 @@ export const checkUser = (req, res) => {
         res.status(err.status).send(err.message)
     }
 }
+
+export const getCardsRandom = (req, res) => {
+    const cardQuantity = req.body.cards
+    Card.aggregate().sample(cardQuantity)
+    .then(randomCards => res.send(randomCards))
+    .catch(err => res.status(400).send(err))
+}

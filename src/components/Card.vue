@@ -11,13 +11,12 @@ const props = defineProps({
         type: Boolean,
         required: false,
         default: false,
-    }
+    },
 })
 
 const id = props.card._id
 const { name, image, flavourText, type } = props.card
-
-const { disableSingleView } = props
+const { disableSingleView} = props
 
 const typeToBg = {
     "Normal": "rgba(189, 195, 199)",

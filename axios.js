@@ -34,3 +34,7 @@ export function logoutUser(){
 export function getUserByToken(){
     return packsterAPI.get('user')
 }
+
+export function getRandomCards(cardQuantity){
+    return packsterAPI.post('/cards/random', {cards: cardQuantity})
+}
