@@ -32,9 +32,13 @@ export function logoutUser(){
 }
 
 export function getUserByToken(){
-    return packsterAPI.get('user')
+    return packsterAPI.get('/user')
 }
 
 export function getRandomCards(cardQuantity){
     return packsterAPI.post('/cards/random', {cards: cardQuantity})
+}
+
+export function postCardstoUser(cardIds, currentUser){
+    return packsterAPI.post('/user/cards', {cardIds, currentUser})
 }

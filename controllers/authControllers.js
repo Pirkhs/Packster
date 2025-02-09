@@ -127,3 +127,11 @@ export const getCardsRandom = (req, res) => {
     .then(randomCards => res.send(randomCards))
     .catch(err => res.status(400).send(err))
 }
+
+export const addCardsToUser = async (req, res) => {
+    const user = await User.findById(req.body.currentUser)
+    user.cards.push(...(req.body.cardIds))
+    user.cards = [... new Set(user.cards)]
+    await user.save();
+    res.status(201)
+}

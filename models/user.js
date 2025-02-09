@@ -20,6 +20,11 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, "Password field required"]
+    },
+    cards: {
+        type: Array,
+        required: false,
+        default: [],
     }
 }, {timestamps: true})
 
