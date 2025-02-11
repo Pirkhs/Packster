@@ -18,6 +18,16 @@ const packedCards = ref([])
 
 const currentUser = ref({})
 
+const createErrorCard = (errorMsg) => {
+    packError.value = {
+        _id: "N/A",
+        name: "Unexpected Error",
+        image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
+        flavourText: errorMsg,
+        type: "Dark"
+    }
+}
+
 getUserByToken()
 .then(res => currentUser.value = res.data)
 
@@ -28,14 +38,7 @@ getAllCards()
 const generatePackedCards = () => {
     getRandomCards(CARDS_IN_PACK)
     .then(res => packedCards.value = res.data)
-    .catch(() => {
-        packError.value = {
-        _id: "N/A",
-        name: "Unexpected Error",
-        image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
-        flavourText: "Error whilst generating pack contents. Please try again",
-        type: "Dark"
-    }})
+    .catch(() => createErrorCard("Error whilst generating pack contents. Please try again"))
 }
 
 const handleOpenModal = (quantity) => {
@@ -61,13 +64,7 @@ const handleNextCard = () => {
             packQuantity.value -= 1
             return handleNextPack()
         })
-        .catch(err => packError.value = {
-            _id: "N/A",
-            name: "Unexpected Error",
-            image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
-            flavourText: `Error whilst adding cards to your account. Please try again`,
-            type: "Dark"
-        })        
+        .catch(() => createErrorCard(`Error whilst adding cards to your account. Please try again`))        
     }
 }
 
