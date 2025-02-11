@@ -28,14 +28,14 @@ getAllCards()
 const generatePackedCards = () => {
     getRandomCards(CARDS_IN_PACK)
     .then(res => packedCards.value = res.data)
-    .catch(() => packError.value = {
+    .catch(() => {
+        packError.value = {
         _id: "N/A",
         name: "Unexpected Error",
         image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
-        flavourText: "There was an error whilst generating pack contents. Please try again",
+        flavourText: "Error whilst generating pack contents. Please try again",
         type: "Dark"
-
-    })
+    }})
 }
 
 const handleOpenModal = (quantity) => {
@@ -57,9 +57,17 @@ const handleNextCard = () => {
         const packedCardIds = packedCards.value.map(card => card._id)
         const currentUserId = currentUser.value._id
         postCardstoUser(packedCardIds, currentUserId)
-        packQuantity.value -= 1
-        handleNextPack()
-        return;
+        .then(() => {
+            packQuantity.value -= 1
+            return handleNextPack()
+        })
+        .catch(err => packError.value = {
+            _id: "N/A",
+            name: "Unexpected Error",
+            image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
+            flavourText: `Error whilst adding cards to your account. Please try again`,
+            type: "Dark"
+        })        
     }
 }
 
@@ -100,15 +108,15 @@ const afterPackReturned = () => {
                     :card="card"
                     :disableSingleView="true"></Card>
                 </transition>
-                
             </div>
-            
+
             <Card class="packed-card" :disableSingleView="true" :card="packError" v-if="packError"></Card>
+            
 
             <div class="container-modal-flex">
 
                 <transition @after-enter="afterPackReturned" name="slide-down">
-                    <div v-if="!isPackOpen" class="container-pack">
+                    <div v-if="!isPackOpen && !packError" class="container-pack">
                         <div class="pack-ripline"></div>
                         <div class="pack"> 
                             <p id="name"> Packster </p>
