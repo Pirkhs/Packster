@@ -4,19 +4,19 @@ const Schema = mongoose.Schema
 const cardSchema = new Schema ({
     name: {
         type: String,
-        required: true,
+        required: [true, "name field required"]
     },
     image: {
         type: String,
-        required: true,
+        required: [true, "image field required"]
     },
     flavourText: {
         type: String,
-        required: true,
+        required: [true, "flavourText field required"]
     },
     type: {
         type: String,
-        required: true
+        required: [true, "type field required"]
     }
 }, {timestamps: true})
 

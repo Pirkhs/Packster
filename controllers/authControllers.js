@@ -141,3 +141,18 @@ export const addCardsToUser = async (req, res) => {
         console.log(err)
     }
 }
+
+export const postCard = (req, res) => {
+    Card.create({
+        name: req.body.name,
+        image: req.body.image,
+        flavourText: req.body.flavourText,
+        type: req.body.type
+    })
+    .then(response => {
+        res.status(201).send(response)
+    })
+    .catch(err => {
+        res.status(400).send(err)
+    })
+}
