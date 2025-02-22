@@ -3,13 +3,18 @@ import { ref } from 'vue'
 import CardGallery from './CardGallery.vue' 
 import { getCardById, getUserByToken, getUserCards } from '../../axios.js';
 import Card from './Card.vue';
+import Loading from './Loading.vue';
 
 const cardCollection = ref({})
 const currentUser = ref({})
 const cardError = ref(null)
+const loading = ref(null)
 
 getUserByToken()
-.then(res => currentUser.value = res.data)
+.then(res => {
+    loading.value = "Loading your collection..."
+    currentUser.value = res.data
+})
 .then(() => {
     return getUserCards(currentUser.value._id)
 })
@@ -25,14 +30,18 @@ getUserByToken()
 .then(cards => {
     const userCollection = cards.map(card => card.data)
     cardCollection.value = userCollection
+    loading.value = null
 })
-.catch((err) => cardError.value = {
+.catch((err) => {
+    loading.value = null
+    
+    cardError.value = {
         _id: "N/A",
         name: "Unexpected Error",
         image: "https://st3.depositphotos.com/1184748/14024/i/450/depositphotos_140244292-stock-photo-black-and-white-background-realistic.jpg",
         flavourText: "Error whilst getting your card collection. Please try again",
         type: "Dark"
-    })
+    }})
 
 
 /* TBF: Faulty Search Feature !!
@@ -56,6 +65,7 @@ watch(search, () => {
     <CardGallery v-if="cardCollection.length" :cardGallery="cardCollection"></CardGallery>
     <Card v-else-if="cardError" class="packed-card" :disableSingleView="true" :card="cardError" ></Card>
     <p v-else-if="cardCollection.length === 0"> No cards to show. Start opening packs to expand your collection! </p>
+    <Loading :msg="loading" v-else-if="loading"> {{ loading }} </Loading>
 
 
 </template>
