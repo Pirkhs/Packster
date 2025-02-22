@@ -42,3 +42,7 @@ export function getRandomCards(cardQuantity){
 export function postCardstoUser(cardIds, currentUser){
     return packsterAPI.post('/user/cards', {cardIds, currentUser})
 }
+
+export function getUserCards(currentUser){
+    return packsterAPI.get(`/users/${currentUser}/cards`)
+}

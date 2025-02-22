@@ -138,7 +138,6 @@ export const addCardsToUser = async (req, res) => {
     }
     catch(err){
         res.status(400).send(err)
-        console.log(err)
     }
 }
 
@@ -155,4 +154,15 @@ export const postCard = (req, res) => {
     .catch(err => {
         res.status(400).send(err)
     })
+}
+
+export const getUserCards = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.user_id)
+        const cards = user.cards
+        res.status(201).send(cards)
+    }
+    catch(err){
+        res.status(400).send(err)
+    }
 }
