@@ -1,6 +1,7 @@
 <script setup>
 import { getAllCards, getRandomCards, postCardstoUser, getUserByToken } from '../../axios'
 import Card from './Card.vue'
+import Loading from './Loading.vue'
 import Overlay from './Overlay.vue'
 import { ref } from 'vue'
 
@@ -12,6 +13,7 @@ const isModalOpen = ref(false)
 const isDropdownOpen = ref(false)
 const featuredCards = ref(null)
 const packError = ref(null)
+const loadingFeatured = ref(null)
 
 const CARDS_IN_PACK = 5
 const packedCards = ref([])
@@ -31,9 +33,13 @@ const createErrorCard = (errorMsg) => {
 getUserByToken()
 .then(res => currentUser.value = res.data)
 
+loadingFeatured.value = "Loading Featured Cards"
 getAllCards()
-.then(res => {featuredCards.value = res.data.slice(0,3)})
-.catch(err => console.log(err))
+.then(res => {
+    featuredCards.value = res.data.slice(0,3)
+    loadingFeatured.value = false
+})
+.catch(err => loadingFeatured.value = false)
 
 const generatePackedCards = () => {
     getRandomCards(CARDS_IN_PACK)
@@ -134,11 +140,11 @@ const afterPackReturned = () => {
         </div>
     </transition>
 
-
     <section class="container-featured">
         <h1> Featured Cards </h1>
-
-        <div class="container-cards" >
+        
+        <Loading v-if="loadingFeatured" :msg="loadingFeatured"></Loading>
+        <div v-else class="container-cards" >
             <Card v-for="card in featuredCards" :card="card"/>
         </div>
         
