@@ -3,12 +3,15 @@ import cards from '../data/cards'
 import ProfileImage from './ProfileImage.vue'
 import Table from './Table.vue'
 import CardGallery from './CardGallery.vue'
-import { getUserByToken } from '../../axios'
+import { getCardTypes, getUserByToken } from '../../axios'
 import { ref } from 'vue'
 import Loading from './Loading.vue'
 
 const currentUser = ref({})
 const loadingUser = ref(null)
+const loadingTypes = ref(null)
+const cardTypes = ref(null)
+const headers = ref(null)
 
 loadingUser.value = "Loading Profile Data"
 getUserByToken()
@@ -18,11 +21,16 @@ getUserByToken()
 })
 
 // Fetch card types
-const cardTypes = ["Normal", "Fire", "Water", "Grass", "Earth", "Electric", "Dark", "Light"]
+loadingTypes.value = "Loading Card Types"
+getCardTypes()
+.then(res => {
+    cardTypes.value = res.data.map(type => type.type)
+    headers.value = ["Packs Opened", "Unique Cards", ...cardTypes.value.map(type => `${type} Type Cards`), "Total Cards"]
+    loadingTypes.value = false
+})
 
-// Fetch statistics data
-const headers = ["Packs Opened", "Unique Cards", ...cardTypes.map(type => `${type} Type Cards`), "Total Cards"]
-const testData = Array(headers.length).fill("________")
+// Statistics
+const testData = []
 
 // Fetch favourite cards 
 const favouriteCards = cards.slice(1)
@@ -41,7 +49,8 @@ const favouriteCards = cards.slice(1)
         </div>
 
         <h2> Statistics </h2>
-        <Table :headers="headers" :data="testData"></Table>
+        <Loading v-if="loadingTypes" :msg="loadingTypes"/>
+        <Table v-else :headers="headers" :data="testData"></Table>
 
         <h2> Favourite Cards </h2>
         <CardGallery :cardGallery="favouriteCards"></CardGallery>

@@ -3,6 +3,7 @@ import Card from '../models/card.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { JWT_SECRET, JWT_EXPIRES_IN } from './secret.js'
+import Type from '../models/type.js'
 
 
 const handleErrors = (err) => {
@@ -165,4 +166,12 @@ export const getUserCards = async (req, res) => {
     catch(err){
         res.status(400).send(err)
     }
+}
+
+export const getCardTypes = async (req, res) => {
+    try {
+        const types = await Type.find()
+        res.status(200).send(types)
+    }
+    catch(err) {res.status(400).send(err)}
 }

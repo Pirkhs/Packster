@@ -46,3 +46,7 @@ export function postCardstoUser(cardIds, currentUser){
 export function getUserCards(currentUser){
     return packsterAPI.get(`/users/${currentUser}/cards`)
 }
+
+export function getCardTypes(){
+    return packsterAPI.get(`/types`)
+}
