@@ -5,11 +5,17 @@ import Table from './Table.vue'
 import CardGallery from './CardGallery.vue'
 import { getUserByToken } from '../../axios'
 import { ref } from 'vue'
+import Loading from './Loading.vue'
 
 const currentUser = ref({})
+const loadingUser = ref(null)
 
+loadingUser.value = "Loading Profile Data"
 getUserByToken()
-.then(res => currentUser.value = res.data)
+.then(res => {
+    currentUser.value = res.data
+    loadingUser.value = false
+})
 
 // Fetch card types
 const cardTypes = ["Normal", "Fire", "Water", "Grass", "Earth", "Electric", "Dark", "Light"]
@@ -24,7 +30,8 @@ const favouriteCards = cards.slice(1)
 </script>
 
 <template>
-    <main>
+    <Loading v-if="loadingUser" :msg="loadingUser"/>
+    <main v-else>
         <div class="container-profile">
             <ProfileImage ref="profileimage" class="profile-img"/>
             <div class="container-username">
