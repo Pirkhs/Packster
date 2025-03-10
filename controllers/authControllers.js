@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import { JWT_SECRET, JWT_EXPIRES_IN } from './secret.js'
 import Type from '../models/type.js'
+import Collection from '../models/collection.js'
 
 
 const handleErrors = (err) => {
@@ -21,6 +22,14 @@ const handleErrors = (err) => {
 
 const createToken = (id) => {
     return jwt.sign({ id }, JWT_SECRET, {expiresIn: JWT_EXPIRES_IN})
+}
+
+const createUserCollection = async (userId) => {
+    Collection.create({
+        userId: userId,
+        cards: []
+    })
+    return []
 }
 
 export const signupPost = (req,res) => {
@@ -41,10 +50,16 @@ export const signupPost = (req,res) => {
     .then(newUser => {
         const token = createToken(newUser._id)
         res.cookie('jwt', token, { httpOnly: true, maxAge: JWT_EXPIRES_IN * 1000})
+        return newUser._id
+    })
+    .then(newUserId => {
+        createUserCollection(newUserId)
+        return newUserId
+    })
+    .then(newUserId => {
         res.status(201).send({
             status: 'success',
-            token,
-            data: newUser
+            data: newUserId
         })
     })
     .catch(err => {
@@ -129,16 +144,19 @@ export const getCardsRandom = (req, res) => {
     .catch(err => res.status(400).send(err))
 }
 
+
 export const addCardsToUser = async (req, res) => {
     try {
-        const user = await User.findById(req.body.currentUser)
-        user.cards.push(...(req.body.cardIds))
-        user.cards = [... new Set(user.cards)]
-        await user.save();
-        res.status(201).send(user)
+        const packedCards = req.body.cardIds
+        let collection = await Collection.findOne({userId: req.params.user_id})
+        if (collection === null) throw Error("No collection associated with this user")
+        collection.cards.push(...(packedCards))
+        collection.cards = [... new Set(collection.cards)]
+        await collection.save();
+        res.status(201).send(collection)
     }
     catch(err){
-        res.status(400).send(err)
+        res.status(400).json(err.message)
     }
 }
 
@@ -159,9 +177,13 @@ export const postCard = (req, res) => {
 
 export const getUserCards = async (req, res) => {
     try {
-        const user = await User.findById(req.params.user_id)
-        const cards = user.cards
-        res.status(201).send(cards)
+        const {user_id} = req.params
+        const collection = await Collection.findOne({userId: user_id})
+        if (collection === null) {
+            await createUserCollection(user_id)
+            return res.status(200).send([])
+        }
+        res.status(200).send(collection.cards)
     }
     catch(err){
         res.status(400).send(err)
@@ -175,3 +197,4 @@ export const getCardTypes = async (req, res) => {
     }
     catch(err) {res.status(400).send(err)}
 }
+

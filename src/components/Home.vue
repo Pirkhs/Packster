@@ -70,7 +70,9 @@ const handleNextCard = () => {
             packQuantity.value -= 1
             return handleNextPack()
         })
-        .catch(() => createErrorCard(`Error whilst adding cards to your account. Please try again`))        
+        .catch((err) => {
+            createErrorCard(`Error whilst adding cards to your account. Please try again.`)
+        })        
     }
 }
 

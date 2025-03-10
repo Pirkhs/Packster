@@ -42,10 +42,10 @@ app.get('/api/packster/user', checkUser)
 
 app.post('/api/packster/cards/random', getCardsRandom)
 
-app.post('/api/packster/user/cards', addCardsToUser)
+app.post('/api/packster/collections/:user_id', addCardsToUser)
 
 app.post('/api/packster/cards', postCard )
 
-app.get('/api/packster/users/:user_id/cards', getUserCards)
+app.get('/api/packster/collections/:user_id', getUserCards)
 
 app.get('/api/packster/types', getCardTypes)
