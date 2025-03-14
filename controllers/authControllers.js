@@ -198,3 +198,13 @@ export const getCardTypes = async (req, res) => {
     catch(err) {res.status(400).send(err)}
 }
 
+export const updatePacksOpened = async (req, res) => {
+    try{
+        const userId = req.params.user_id
+        const user = await User.findById(userId)
+        user.packsOpened += 1
+        user.save();
+        res.status(200).send(user)
+    }
+    catch(err) {res.status(400).send(err)}
+}

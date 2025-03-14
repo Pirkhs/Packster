@@ -1,5 +1,5 @@
 <script setup>
-import { getAllCards, getRandomCards, postCardstoUser, getUserByToken } from '../../axios'
+import { getAllCards, getRandomCards, postCardstoUser, getUserByToken, incrementPacksOpened } from '../../axios'
 import Card from './Card.vue'
 import Loading from './Loading.vue'
 import Overlay from './Overlay.vue'
@@ -60,11 +60,12 @@ const handleOpenPack = () => {
     packedCards.value = generatePackedCards()
 }
 
-const handleNextCard = () => {
+const handleNextCard = async () => {
     currCardIndex.value += 1;
     if (currCardIndex.value === packedCards.value.length) {
         const packedCardIds = packedCards.value.map(card => card._id)
         const currentUserId = currentUser.value._id
+        await incrementPacksOpened(currentUserId)
         postCardstoUser(packedCardIds, currentUserId)
         .then(() => {
             packQuantity.value -= 1

@@ -25,6 +25,11 @@ const userSchema = new Schema({
         type: Array,
         required: false,
         default: [],
+    },
+    packsOpened: {
+        type: Number,
+        required: [true, "packsOpened field required"],
+        default: 0,
     }
 }, {timestamps: true})
 

@@ -50,3 +50,7 @@ export function getUserCards(currentUser){
 export function getCardTypes(){
     return packsterAPI.get(`/types`)
 }
+
+export function incrementPacksOpened(user){
+    return packsterAPI.get(`/users/${user}`)
+}
