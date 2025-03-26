@@ -53,6 +53,7 @@ getUserByToken()
     tableData.value.push(packsOpened.value)
     loadingUser.value = null
 })
+.catch(err => loadingUser.value = err.message)
 
 // Fetch card types
 loadingTypes.value = "Loading Card Types"
@@ -62,6 +63,7 @@ getCardTypes()
     headers.value = [...cardTypes.value.map(type => `${type} Type Cards`), "Total Cards", "Packs Opened"]
     loadingTypes.value = false
 })
+.catch(err => loadingTypes.value = err.message)
 
 // Fetch favourite cards 
 const favouriteCards = cards.slice(1)
